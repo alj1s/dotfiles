@@ -1,0 +1,33 @@
+'use babel';
+/* @flow */
+
+/*
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the license found in the LICENSE file in
+ * the root directory of this source tree.
+ */
+
+var codeFormatManager = null;
+
+module.exports = {
+
+  activate: function activate(state) {
+    var CodeFormatManager = require('./CodeFormatManager');
+    codeFormatManager = new CodeFormatManager();
+  },
+
+  consumeProvider: function consumeProvider(provider) {
+    codeFormatManager.addProvider(provider);
+  },
+
+  deactivate: function deactivate() {
+    if (codeFormatManager) {
+      codeFormatManager.dispose();
+      codeFormatManager = null;
+    }
+  }
+
+};
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9hbmRyZXdqb25lcy8uYXRvbS9wYWNrYWdlcy9udWNsaWRlLWNvZGUtZm9ybWF0L2xpYi9tYWluLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLFdBQVcsQ0FBQzs7Ozs7Ozs7Ozs7QUFXWixJQUFJLGlCQUFxQyxHQUFHLElBQUksQ0FBQzs7QUFFakQsTUFBTSxDQUFDLE9BQU8sR0FBRzs7QUFFZixVQUFRLEVBQUEsa0JBQUMsS0FBVyxFQUFRO0FBQzFCLFFBQUksaUJBQWlCLEdBQUcsT0FBTyxDQUFDLHFCQUFxQixDQUFDLENBQUM7QUFDdkQscUJBQWlCLEdBQUcsSUFBSSxpQkFBaUIsRUFBRSxDQUFDO0dBQzdDOztBQUVELGlCQUFlLEVBQUEseUJBQUMsUUFBNEIsRUFBRTtBQUM1QyxxQkFBaUIsQ0FBQyxXQUFXLENBQUMsUUFBUSxDQUFDLENBQUM7R0FDekM7O0FBRUQsWUFBVSxFQUFBLHNCQUFHO0FBQ1gsUUFBSSxpQkFBaUIsRUFBRTtBQUNyQix1QkFBaUIsQ0FBQyxPQUFPLEVBQUUsQ0FBQztBQUM1Qix1QkFBaUIsR0FBRyxJQUFJLENBQUM7S0FDMUI7R0FDRjs7Q0FFRixDQUFDIiwiZmlsZSI6Ii9Vc2Vycy9hbmRyZXdqb25lcy8uYXRvbS9wYWNrYWdlcy9udWNsaWRlLWNvZGUtZm9ybWF0L2xpYi9tYWluLmpzIiwic291cmNlc0NvbnRlbnQiOlsiJ3VzZSBiYWJlbCc7XG4vKiBAZmxvdyAqL1xuXG4vKlxuICogQ29weXJpZ2h0IChjKSAyMDE1LXByZXNlbnQsIEZhY2Vib29rLCBJbmMuXG4gKiBBbGwgcmlnaHRzIHJlc2VydmVkLlxuICpcbiAqIFRoaXMgc291cmNlIGNvZGUgaXMgbGljZW5zZWQgdW5kZXIgdGhlIGxpY2Vuc2UgZm91bmQgaW4gdGhlIExJQ0VOU0UgZmlsZSBpblxuICogdGhlIHJvb3QgZGlyZWN0b3J5IG9mIHRoaXMgc291cmNlIHRyZWUuXG4gKi9cblxudmFyIGNvZGVGb3JtYXRNYW5hZ2VyOiA/Q29kZUZvcm1hdE1hbmFnZXIgPSBudWxsO1xuXG5tb2R1bGUuZXhwb3J0cyA9IHtcblxuICBhY3RpdmF0ZShzdGF0ZTogP2FueSk6IHZvaWQge1xuICAgIHZhciBDb2RlRm9ybWF0TWFuYWdlciA9IHJlcXVpcmUoJy4vQ29kZUZvcm1hdE1hbmFnZXInKTtcbiAgICBjb2RlRm9ybWF0TWFuYWdlciA9IG5ldyBDb2RlRm9ybWF0TWFuYWdlcigpO1xuICB9LFxuXG4gIGNvbnN1bWVQcm92aWRlcihwcm92aWRlcjogQ29kZUZvcm1hdFByb3ZpZGVyKSB7XG4gICAgY29kZUZvcm1hdE1hbmFnZXIuYWRkUHJvdmlkZXIocHJvdmlkZXIpO1xuICB9LFxuXG4gIGRlYWN0aXZhdGUoKSB7XG4gICAgaWYgKGNvZGVGb3JtYXRNYW5hZ2VyKSB7XG4gICAgICBjb2RlRm9ybWF0TWFuYWdlci5kaXNwb3NlKCk7XG4gICAgICBjb2RlRm9ybWF0TWFuYWdlciA9IG51bGw7XG4gICAgfVxuICB9XG5cbn07XG4iXX0=

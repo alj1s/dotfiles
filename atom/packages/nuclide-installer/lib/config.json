@@ -1,0 +1,52 @@
+{
+  "packages": [
+    {
+      "name": "hyperclick",
+      "version": "0.0.24"
+    },
+    {
+      "name": "nuclide-code-format",
+      "version": "0.0.24"
+    },
+    {
+      "name": "nuclide-diff-view",
+      "version": "0.0.24"
+    },
+    {
+      "name": "nuclide-file-tree",
+      "version": "0.0.24"
+    },
+    {
+      "name": "nuclide-file-watcher",
+      "version": "0.0.24"
+    },
+    {
+      "name": "nuclide-flow",
+      "version": "0.0.24"
+    },
+    {
+      "name": "nuclide-hack",
+      "version": "0.0.24"
+    },
+    {
+      "name": "nuclide-hg-repository",
+      "version": "0.0.24"
+    },
+    {
+      "name": "nuclide-language-hack",
+      "version": "0.0.24"
+    },
+    {
+      "name": "nuclide-quick-open",
+      "version": "0.0.24"
+    },
+    {
+      "name": "nuclide-remote-projects",
+      "version": "0.0.24"
+    },
+    {
+      "name": "nuclide-type-hint",
+      "version": "0.0.24"
+    }
+  ]
+}

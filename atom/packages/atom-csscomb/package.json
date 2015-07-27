@@ -1,0 +1,298 @@
+{
+  "name": "atom-csscomb",
+  "version": "1.6.3",
+  "private": true,
+  "description": "Sort your CSS with CSSComb.",
+  "activationCommands": {
+    "atom-workspace": [
+      "atom-csscomb:execute"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/1000ch/atom-csscomb"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "1000ch",
+    "email": "shogo.sensui@gmail.com",
+    "url": "http://github.com/1000ch"
+  },
+  "engines": {
+    "atom": "*",
+    "node": "*"
+  },
+  "dependencies": {
+    "cssbeautify": "^0.3.1",
+    "csscomb": "^3.1.7"
+  },
+  "readme": "# [atom-csscomb](https://atom.io/packages/atom-csscomb)\n\n## About\n\nSort your CSS with [CSSComb](https://github.com/csscomb/csscomb.js).\n\n![demo](https://raw.githubusercontent.com/1000ch/atom-csscomb/master/demo.gif)\n\n## Installation\n\n```bash\n$ apm install atom-csscomb\n```\n\n## Usage\n\n- Press `ctrl + alt + c`\n- `Packages` > `CSSComb` > `Sort properties`\n- Right Click > `Sort properties`\n\nSelected text will be sorted if there is selection.\n\n## Configuration\n\n![settings](https://raw.githubusercontent.com/1000ch/atom-csscomb/master/settings.png)\n\n### Configure with JSON\n\nTo configure with JSON file, check this.\nThere are 2 ways to apply from JSON file for sort order.\n\n1. Put `.csscomb.json` to workspace of atom.\n2. Edit `~/.atom/packages/atom-csscomb/csscomb.json`.\n\nIf there is `.csscomb.json`, it will be applied primary. \n(Even though you edit `~/.atom/packages/atom-csscomb/csscomb.json`.)\n\n### Configure with preset\n\nTo configure with presets (`csscomb`, `zen`, `yandex`), check this.\n\n### Execute on Save\n\nIf you want to apply sort when you save, check it on.\n\n### Indent Type\n\nChoose the indent type from **space** (default) or **tab**.\n\n### Indent Size\n\nSet the indent size (default is **2**). This value is used when you are choosing **space** for indent type.\n\n## License\n\nMIT: http://1000ch.mit-license.org\n",
+  "readmeFilename": "readme.md",
+  "bugs": {
+    "url": "https://github.com/1000ch/atom-csscomb/issues"
+  },
+  "homepage": "https://github.com/1000ch/atom-csscomb",
+  "_id": "atom-csscomb@1.6.3",
+  "_shasum": "1800229a0acd868283664d9e53cb9697df9d4d57",
+  "_resolved": "file:../d-115626-8909-msap81/package.tgz",
+  "_from": "../d-115626-8909-msap81/package.tgz",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [
+      {
+        "name": "cssbeautify",
+        "version": "0.3.1",
+        "path": "node_modules/cssbeautify/cssbeautify.js"
+      },
+      {
+        "name": "csscomb",
+        "version": "3.1.8",
+        "path": "node_modules/csscomb/lib/csscomb.js"
+      },
+      {
+        "name": "commander",
+        "version": "2.0.0",
+        "path": "node_modules/csscomb/node_modules/commander/index.js"
+      },
+      {
+        "name": "csscomb-core",
+        "version": "3.0.0-3.1",
+        "path": "node_modules/csscomb/node_modules/csscomb-core/lib/core.js"
+      },
+      {
+        "name": "minimatch",
+        "version": "0.2.12",
+        "path": "node_modules/csscomb/node_modules/csscomb-core/node_modules/minimatch/minimatch.js"
+      },
+      {
+        "name": "lru-cache",
+        "version": "2.6.5",
+        "path": "node_modules/csscomb/node_modules/csscomb-core/node_modules/minimatch/node_modules/lru-cache/lib/lru-cache.js"
+      },
+      {
+        "name": "sigmund",
+        "version": "1.0.1",
+        "path": "node_modules/csscomb/node_modules/csscomb-core/node_modules/minimatch/node_modules/sigmund/sigmund.js"
+      },
+      {
+        "name": "vow-fs",
+        "version": "0.3.2",
+        "path": "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/lib/fs.js"
+      },
+      {
+        "name": "glob",
+        "version": "3.2.8",
+        "path": "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/glob/glob.js"
+      },
+      {
+        "name": "inherits",
+        "version": "2.0.1",
+        "path": "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/glob/node_modules/inherits/inherits.js"
+      },
+      {
+        "name": "node-uuid",
+        "version": "1.4.0",
+        "path": "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/node-uuid/uuid.js"
+      },
+      {
+        "name": "vow-queue",
+        "version": "0.3.1",
+        "path": "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/vow-queue/lib/queue.js"
+      },
+      {
+        "name": "gonzales-pe",
+        "version": "3.0.0-28",
+        "path": "node_modules/csscomb/node_modules/gonzales-pe/lib/gonzales.js"
+      },
+      {
+        "name": "vow",
+        "version": "0.4.4",
+        "path": "node_modules/csscomb/node_modules/vow/lib/vow.js"
+      }
+    ],
+    "extensions": {
+      ".json": [
+        "csscomb.json",
+        "node_modules/cssbeautify/package.json",
+        "node_modules/csscomb/config/csscomb.json",
+        "node_modules/csscomb/config/yandex.json",
+        "node_modules/csscomb/config/zen.json",
+        "node_modules/csscomb/node_modules/commander/package.json",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/minimatch/node_modules/lru-cache/package.json",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/minimatch/node_modules/sigmund/package.json",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/minimatch/package.json",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/glob/node_modules/inherits/package.json",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/glob/package.json",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/node-uuid/package.json",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/vow-queue/.jscs.json",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/vow-queue/bower.json",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/vow-queue/package.json",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/package.json",
+        "node_modules/csscomb/node_modules/csscomb-core/package.json",
+        "node_modules/csscomb/node_modules/gonzales-pe/package.json",
+        "node_modules/csscomb/node_modules/vow/package.json",
+        "node_modules/csscomb/package.json",
+        "package.json"
+      ],
+      ".js": [
+        "index.js",
+        "node_modules/cssbeautify/cssbeautify.js",
+        "node_modules/csscomb/lib/cli.js",
+        "node_modules/csscomb/lib/csscomb.js",
+        "node_modules/csscomb/lib/format.js",
+        "node_modules/csscomb/lib/gonzales.js",
+        "node_modules/csscomb/lib/options/always-semicolon.js",
+        "node_modules/csscomb/lib/options/block-indent.js",
+        "node_modules/csscomb/lib/options/color-case.js",
+        "node_modules/csscomb/lib/options/color-shorthand.js",
+        "node_modules/csscomb/lib/options/element-case.js",
+        "node_modules/csscomb/lib/options/eof-newline.js",
+        "node_modules/csscomb/lib/options/leading-zero.js",
+        "node_modules/csscomb/lib/options/quotes.js",
+        "node_modules/csscomb/lib/options/remove-empty-rulesets.js",
+        "node_modules/csscomb/lib/options/sort-order-fallback.js",
+        "node_modules/csscomb/lib/options/sort-order.js",
+        "node_modules/csscomb/lib/options/space-after-colon.js",
+        "node_modules/csscomb/lib/options/space-after-combinator.js",
+        "node_modules/csscomb/lib/options/space-after-opening-brace.js",
+        "node_modules/csscomb/lib/options/space-after-selector-delimiter.js",
+        "node_modules/csscomb/lib/options/space-before-closing-brace.js",
+        "node_modules/csscomb/lib/options/space-before-colon.js",
+        "node_modules/csscomb/lib/options/space-before-combinator.js",
+        "node_modules/csscomb/lib/options/space-before-opening-brace.js",
+        "node_modules/csscomb/lib/options/space-before-selector-delimiter.js",
+        "node_modules/csscomb/lib/options/space-between-declarations.js",
+        "node_modules/csscomb/lib/options/strip-spaces.js",
+        "node_modules/csscomb/lib/options/tab-size.js",
+        "node_modules/csscomb/lib/options/unitless-zero.js",
+        "node_modules/csscomb/lib/options/vendor-prefix-align.js",
+        "node_modules/csscomb/node_modules/commander/index.js",
+        "node_modules/csscomb/node_modules/csscomb-core/lib/core.js",
+        "node_modules/csscomb/node_modules/csscomb-core/lib/errors.js",
+        "node_modules/csscomb/node_modules/csscomb-core/lib/format.js",
+        "node_modules/csscomb/node_modules/csscomb-core/lib/plugin.js",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/minimatch/minimatch.js",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/minimatch/node_modules/lru-cache/lib/lru-cache.js",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/minimatch/node_modules/sigmund/bench.js",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/minimatch/node_modules/sigmund/sigmund.js",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/lib/fs.js",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/glob/examples/g.js",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/glob/examples/usr-local.js",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/glob/glob.js",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/glob/node_modules/inherits/inherits.js",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/glob/node_modules/inherits/inherits_browser.js",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/glob/node_modules/inherits/test.js",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/node-uuid/benchmark/benchmark.js",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/node-uuid/uuid.js",
+        "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/vow-queue/lib/queue.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/bin/generate-tests.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/bin/gonzales.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/css/mark.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/css/parse.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/css/stringify.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/css/tokenizer.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/gonzales.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/less/mark.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/less/parse.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/less/stringify.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/less/tokenizer.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/node-types.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/node.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/parse.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/parsing-error.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/sass/mark.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/sass/parse.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/sass/stringify.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/sass/tokenizer.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/scss/mark.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/scss/parse.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/scss/stringify.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/scss/tokenizer.js",
+        "node_modules/csscomb/node_modules/gonzales-pe/lib/token-types.js",
+        "node_modules/csscomb/node_modules/vow/lib/vow.js",
+        "node_modules/csscomb/node_modules/vow/vow.min.js"
+      ]
+    },
+    "folders": [
+      {
+        "paths": [
+          ""
+        ],
+        "dependencies": {
+          "cssbeautify": "^0.3.1",
+          "csscomb": "^3.1.7"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/csscomb/config",
+          "node_modules/csscomb/lib",
+          "node_modules/csscomb/lib/options",
+          "node_modules/csscomb"
+        ],
+        "dependencies": {
+          "commander": "2.0.0",
+          "csscomb-core": "3.0.0-3.1",
+          "gonzales-pe": "3.0.0-28",
+          "vow": "0.4.4"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/csscomb/node_modules/csscomb-core/lib",
+          "node_modules/csscomb/node_modules/csscomb-core",
+          "node_modules/csscomb/node_modules/csscomb-core/test"
+        ],
+        "dependencies": {
+          "gonzales-pe": "3.0.0-28",
+          "minimatch": "0.2.12",
+          "vow": "0.4.4",
+          "vow-fs": "0.3.2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/csscomb/node_modules/csscomb-core/node_modules/minimatch",
+          "node_modules/csscomb/node_modules/csscomb-core/node_modules/minimatch/test"
+        ],
+        "dependencies": {
+          "lru-cache": "2",
+          "sigmund": "~1.0.0"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/lib",
+          "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs",
+          "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/test"
+        ],
+        "dependencies": {
+          "node-uuid": "1.4.0",
+          "vow": "0.4.4",
+          "vow-queue": "0.3.1",
+          "glob": "3.2.8"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/glob/examples",
+          "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/glob",
+          "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/glob/test"
+        ],
+        "dependencies": {
+          "minimatch": "~0.2.11",
+          "inherits": "2"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/vow-queue",
+          "node_modules/csscomb/node_modules/csscomb-core/node_modules/vow-fs/node_modules/vow-queue/lib"
+        ],
+        "dependencies": {
+          "vow": "~0.4.0"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "consumedServices": {
+    "nuclide-type-hint.provider": {
+      "versions": {
+        "0.0.0": "consumeProvider"
+      }
+    }
+  },
+  "description": "Provides type hint service for showing code and type hints when hovering the mouse over code expressions",
+  "devDependencies": {
+    "nuclide-atom-interfaces": "0.0.24"
+  },
+  "engines": {
+    "atom": ">=1.0.0"
+  },
+  "main": "./lib/main",
+  "name": "nuclide-type-hint",
+  "nuclide": {
+    "packageType": "Atom",
+    "testRunner": "apm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facebooknuclideapm/nuclide-type-hint"
+  },
+  "version": "0.0.24",
+  "readme": "**NOTE:** The official repository for this package is https://github.com/facebook/nuclide.\nPlease file all issues and pull requests there.\n\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/facebooknuclideapm/nuclide-type-hint/issues"
+  },
+  "homepage": "https://github.com/facebooknuclideapm/nuclide-type-hint",
+  "_id": "nuclide-type-hint@0.0.24",
+  "_shasum": "e581c86af8aac5376b76bfa2cf5dcada1f83700f",
+  "_resolved": "file:../d-11569-7733-17oy8x5/package.tgz",
+  "_from": "../d-11569-7733-17oy8x5/package.tgz",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".js": [
+        "lib/TypeHintManager.js",
+        "lib/main.js"
+      ],
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
+}

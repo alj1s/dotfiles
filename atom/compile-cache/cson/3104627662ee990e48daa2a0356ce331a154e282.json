@@ -1,0 +1,1 @@
+{"menu":[{"label":"Packages","submenu":[{"label":"Connect...","command":"nuclide-remote-projects:connect"}]}]}

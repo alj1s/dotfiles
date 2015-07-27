@@ -1,0 +1,193 @@
+{
+  "dependencies": {
+    "nuclide-installer-base": "0.0.24"
+  },
+  "description": "Installs the suite of Atom packages that compose Nuclide",
+  "devDependencies": {
+    "nuclide-atom-interfaces": "0.0.24"
+  },
+  "engines": {
+    "atom": ">=1.0.0"
+  },
+  "main": "./lib/main",
+  "name": "nuclide-installer",
+  "nuclide": {
+    "packageType": "Atom",
+    "testRunner": "apm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facebooknuclideapm/nuclide-installer"
+  },
+  "version": "0.0.24",
+  "readme": "**NOTE:** The official repository for this package is https://github.com/facebook/nuclide.\nPlease file all issues and pull requests there.\n\n# Nuclide\n\nThis is the only Atom package you need to install to get Nuclide.\n\nBecause Nuclide is a collection of packages, this package\nis used to ensure that you have the entire suite of Nuclide packages\nfor your current version of Atom.\n\n## FAQ\n\n**Why must I install the full suite of Nuclide packages instead of just the ones I care about?**\n\nIn the future, we may provide options to install subsets of\nAtom packages tailored to a specific feature, such as remote editing,\nFlow, Hack, or Mercurial. Currently, some Atom packages\nhave interdependencies that make this tricky.\n\nFor example, both `nuclide-hg-repository` and `nuclide-remote-projects`\nneed `nuclide-file-tree` to provide their full set of features.\nBecause only one version of an Atom package can be installed at a time,\nit is critical that all three packages are compatible if they are\ninstalled together. Installing the full suite of Nuclide packages ensures this\nis the case.\n\nIn the meantime, Nuclide is committed to reducing the impact of packages\nthat you do not use so they do not add any drag to your Atom usage.\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/facebooknuclideapm/nuclide-installer/issues"
+  },
+  "homepage": "https://github.com/facebooknuclideapm/nuclide-installer",
+  "_id": "nuclide-installer@0.0.24",
+  "_shasum": "dfbdb2334f36a540702f7d32384817c6b824b97e",
+  "_resolved": "file:../d-11568-6123-1upqx14/package.tgz",
+  "_from": "../d-11568-6123-1upqx14/package.tgz",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [
+      {
+        "name": "nuclide-installer-base",
+        "version": "0.0.24",
+        "path": "node_modules/nuclide-installer-base/lib/main.js"
+      },
+      {
+        "name": "nuclide-commons",
+        "version": "0.0.24",
+        "path": "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/main.js"
+      },
+      {
+        "name": "dequeue",
+        "version": "1.0.5",
+        "path": "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/dequeue/lib/index.js"
+      },
+      {
+        "name": "mkdirp",
+        "version": "0.5.0",
+        "path": "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/mkdirp/index.js"
+      },
+      {
+        "name": "minimist",
+        "version": "0.0.8",
+        "path": "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/mkdirp/node_modules/minimist/index.js"
+      },
+      {
+        "name": "nuclide-test-helpers",
+        "version": "0.0.24",
+        "path": "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/nuclide-test-helpers/lib/main.js"
+      },
+      {
+        "name": "rimraf",
+        "version": "2.2.8",
+        "path": "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/rimraf/rimraf.js"
+      },
+      {
+        "name": "shell-escape",
+        "version": "0.2.0",
+        "path": "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/shell-escape/shell-escape.js"
+      },
+      {
+        "name": "temp",
+        "version": "0.8.1",
+        "path": "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/temp/lib/temp.js"
+      }
+    ],
+    "extensions": {
+      ".json": [
+        "lib/config.json",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/dequeue/package.json",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/mkdirp/node_modules/minimist/package.json",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/mkdirp/package.json",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/nuclide-test-helpers/package.json",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/rimraf/package.json",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/shell-escape/package.json",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/temp/package.json",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/package.json",
+        "node_modules/nuclide-installer-base/package.json",
+        "package.json"
+      ],
+      ".js": [
+        "lib/main.js",
+        "node_modules/nuclide-installer-base/lib/main.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/PromiseQueue.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/array.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/config.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/debounce.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/dns_utils.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/environment.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/extend.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/filesystem.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/http.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/main.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/object.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/paths.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/process.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/promises.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/strings.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib/vcs.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/dequeue/lib/dequeue.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/dequeue/lib/index.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/mkdirp/bin/cmd.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/mkdirp/examples/pow.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/mkdirp/index.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/mkdirp/node_modules/minimist/example/parse.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/mkdirp/node_modules/minimist/index.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/nuclide-test-helpers/lib/main.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/rimraf/bin.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/rimraf/rimraf.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/shell-escape/shell-escape.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/temp/examples/grepcount.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/temp/examples/pdfcreator.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/temp/lib/temp.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/temp/no_cleanup.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/temp/no_cleanup_on_exit.js",
+        "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/temp/no_cleanup_on_exit.spec.js"
+      ]
+    },
+    "folders": [
+      {
+        "paths": [
+          "lib",
+          ""
+        ],
+        "dependencies": {
+          "nuclide-installer-base": "0.0.24"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/nuclide-installer-base/lib",
+          "node_modules/nuclide-installer-base",
+          "node_modules/nuclide-installer-base/spec"
+        ],
+        "dependencies": {
+          "nuclide-commons": "0.0.24"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/nuclide-installer-base/node_modules/nuclide-commons/lib",
+          "node_modules/nuclide-installer-base/node_modules/nuclide-commons",
+          "node_modules/nuclide-installer-base/node_modules/nuclide-commons/spec"
+        ],
+        "dependencies": {
+          "dequeue": "1.0.5",
+          "mkdirp": "0.5.0",
+          "nuclide-test-helpers": "0.0.24",
+          "rimraf": "2.2.8",
+          "shell-escape": "0.2.0",
+          "temp": "0.8.1"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/mkdirp/bin",
+          "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/mkdirp/examples",
+          "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/mkdirp",
+          "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/mkdirp/test"
+        ],
+        "dependencies": {
+          "minimist": "0.0.8"
+        }
+      },
+      {
+        "paths": [
+          "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/temp/examples",
+          "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/temp/lib",
+          "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/temp",
+          "node_modules/nuclide-installer-base/node_modules/nuclide-commons/node_modules/temp/test"
+        ],
+        "dependencies": {
+          "rimraf": "~2.2.6"
+        }
+      }
+    ]
+  }
+}

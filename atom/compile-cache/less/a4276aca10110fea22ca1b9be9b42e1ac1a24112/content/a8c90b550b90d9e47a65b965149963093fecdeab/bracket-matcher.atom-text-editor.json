@@ -1,0 +1,1 @@
+{"digest":"5c9fdbe8e8a9eadc9ca66076b11bb02ee06f65b1","css":".bracket-matcher .region {\n  border-bottom: 1px dotted lime;\n  position: absolute;\n}\n","imports":[{"path":"static/variables/ui-variables.less","digest":"8941827f61ffe6109d099580717e5ea2d0b9cd3c"},{"path":"static/variables/syntax-variables.less","digest":"812c1b7883a023f768773d14294653adcdb932d7"}],"version":1}

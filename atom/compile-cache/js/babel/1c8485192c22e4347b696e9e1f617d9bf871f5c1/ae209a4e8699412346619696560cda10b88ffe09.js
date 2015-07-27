@@ -1,0 +1,33 @@
+'use babel';
+/* @flow */
+
+/*
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the license found in the LICENSE file in
+ * the root directory of this source tree.
+ */
+
+var _require$__test__ = require('../lib/main').__test__;
+
+var encryptString = _require$__test__.encryptString;
+var decryptString = _require$__test__.decryptString;
+
+describe('Nuclide Remote Projects', function () {
+  describe('encryptString and decryptString', function () {
+    it('can encrypt and dycrypt strings', function () {
+      var text = 'This little piggy went to market';
+
+      var _encryptString = encryptString(text);
+
+      var password = _encryptString.password;
+      var salt = _encryptString.salt;
+      var encryptedString = _encryptString.encryptedString;
+
+      expect(encryptedString).not.toEqual(text);
+      expect(decryptString(encryptedString, password, salt)).toEqual(text);
+    });
+  });
+});
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9hbmRyZXdqb25lcy8uYXRvbS9wYWNrYWdlcy9udWNsaWRlLXJlbW90ZS1wcm9qZWN0cy9zcGVjL051Y2xpZGVSZW1vdGVQcm9qZWN0cy1zcGVjLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLFdBQVcsQ0FBQzs7Ozs7Ozs7Ozs7d0JBV3lCLE9BQU8sQ0FBQyxhQUFhLENBQUMsQ0FBQyxRQUFROztJQUEvRCxhQUFhLHFCQUFiLGFBQWE7SUFBRSxhQUFhLHFCQUFiLGFBQWE7O0FBRWpDLFFBQVEsQ0FBQyx5QkFBeUIsRUFBRSxZQUFNO0FBQ3hDLFVBQVEsQ0FBQyxpQ0FBaUMsRUFBRSxZQUFNO0FBQ2hELE1BQUUsQ0FBQyxpQ0FBaUMsRUFBRSxZQUFNO0FBQzFDLFVBQUksSUFBSSxHQUFHLGtDQUFrQyxDQUFDOzsyQkFLMUMsYUFBYSxDQUFDLElBQUksQ0FBQzs7VUFIckIsUUFBUSxrQkFBUixRQUFRO1VBQ1IsSUFBSSxrQkFBSixJQUFJO1VBQ0osZUFBZSxrQkFBZixlQUFlOztBQUdqQixZQUFNLENBQUMsZUFBZSxDQUFDLENBQUMsR0FBRyxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsQ0FBQztBQUMxQyxZQUFNLENBQUMsYUFBYSxDQUFDLGVBQWUsRUFBRSxRQUFRLEVBQUUsSUFBSSxDQUFDLENBQUMsQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDLENBQUM7S0FFdEUsQ0FBQyxDQUFDO0dBQ0osQ0FBQyxDQUFDO0NBQ0osQ0FBQyxDQUFDIiwiZmlsZSI6Ii9Vc2Vycy9hbmRyZXdqb25lcy8uYXRvbS9wYWNrYWdlcy9udWNsaWRlLXJlbW90ZS1wcm9qZWN0cy9zcGVjL051Y2xpZGVSZW1vdGVQcm9qZWN0cy1zcGVjLmpzIiwic291cmNlc0NvbnRlbnQiOlsiJ3VzZSBiYWJlbCc7XG4vKiBAZmxvdyAqL1xuXG4vKlxuICogQ29weXJpZ2h0IChjKSAyMDE1LXByZXNlbnQsIEZhY2Vib29rLCBJbmMuXG4gKiBBbGwgcmlnaHRzIHJlc2VydmVkLlxuICpcbiAqIFRoaXMgc291cmNlIGNvZGUgaXMgbGljZW5zZWQgdW5kZXIgdGhlIGxpY2Vuc2UgZm91bmQgaW4gdGhlIExJQ0VOU0UgZmlsZSBpblxuICogdGhlIHJvb3QgZGlyZWN0b3J5IG9mIHRoaXMgc291cmNlIHRyZWUuXG4gKi9cblxudmFyIHtlbmNyeXB0U3RyaW5nLCBkZWNyeXB0U3RyaW5nfSA9IHJlcXVpcmUoJy4uL2xpYi9tYWluJykuX190ZXN0X187XG5cbmRlc2NyaWJlKCdOdWNsaWRlIFJlbW90ZSBQcm9qZWN0cycsICgpID0+IHtcbiAgZGVzY3JpYmUoJ2VuY3J5cHRTdHJpbmcgYW5kIGRlY3J5cHRTdHJpbmcnLCAoKSA9PiB7XG4gICAgaXQoJ2NhbiBlbmNyeXB0IGFuZCBkeWNyeXB0IHN0cmluZ3MnLCAoKSA9PiB7XG4gICAgICB2YXIgdGV4dCA9ICdUaGlzIGxpdHRsZSBwaWdneSB3ZW50IHRvIG1hcmtldCc7XG4gICAgICB2YXIge1xuICAgICAgICBwYXNzd29yZCxcbiAgICAgICAgc2FsdCxcbiAgICAgICAgZW5jcnlwdGVkU3RyaW5nLFxuICAgICAgfSA9IGVuY3J5cHRTdHJpbmcodGV4dCk7XG5cbiAgICAgIGV4cGVjdChlbmNyeXB0ZWRTdHJpbmcpLm5vdC50b0VxdWFsKHRleHQpO1xuICAgICAgZXhwZWN0KGRlY3J5cHRTdHJpbmcoZW5jcnlwdGVkU3RyaW5nLCBwYXNzd29yZCwgc2FsdCkpLnRvRXF1YWwodGV4dCk7XG5cbiAgICB9KTtcbiAgfSk7XG59KTtcbiJdfQ==
