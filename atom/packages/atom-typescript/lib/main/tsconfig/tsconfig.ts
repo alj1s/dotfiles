@@ -95,15 +95,6 @@ var compilerOptionsValidation: simpleValidator.ValidationInfo = {
 }
 var validator = new simpleValidator.SimpleValidator(compilerOptionsValidation);
 
-interface TypeScriptProjectRawSpecification {
-    version?: string;
-    compilerOptions?: CompilerOptions;
-    files?: string[];                                   // optional: paths to files
-    filesGlob?: string[];                               // optional: An array of 'glob / minimatch / RegExp' patterns to specify source files
-    formatCodeOptions?: formatting.FormatCodeOptions;   // optional: formatting options
-    compileOnSave?: boolean;                            // optional: compile on save. Ignored to build tools. Used by IDEs
-}
-
 interface UsefulFromPackageJson {
     /** We need this as this is the name the user is going to import **/
     name: string;
@@ -114,7 +105,25 @@ interface UsefulFromPackageJson {
     main: string;
 }
 
-// Main configuration
+/**
+ * This is the JSON.parse result of a tsconfig.json
+ */
+interface TypeScriptProjectRawSpecification {
+    version?: string;
+    compilerOptions?: CompilerOptions;
+    files?: string[];                                   // optional: paths to files
+    filesGlob?: string[];                               // optional: An array of 'glob / minimatch / RegExp' patterns to specify source files
+    formatCodeOptions?: formatting.FormatCodeOptions;   // optional: formatting options
+    compileOnSave?: boolean;                            // optional: compile on save. Ignored to build tools. Used by IDEs
+    buildOnSave?: boolean;
+    externalTranspiler?: string;
+    scripts?: { postbuild?: string };
+}
+
+/**
+ * This is `TypeScriptProjectRawSpecification` parsed further
+ * Designed for use throughout out code base
+ */
 export interface TypeScriptProjectSpecification {
     compilerOptions: ts.CompilerOptions;
     files: string[];
@@ -122,7 +131,10 @@ export interface TypeScriptProjectSpecification {
     filesGlob?: string[];
     formatCodeOptions: ts.FormatCodeOptions;
     compileOnSave: boolean;
+    buildOnSave: boolean;
     package?: UsefulFromPackageJson;
+    externalTranspiler?: string;
+    scripts: { postbuild?: string };
 }
 
 ///////// FOR USE WITH THE API /////////////
@@ -159,6 +171,7 @@ export interface GET_PROJECT_PROJECT_FILE_INVALID_OPTIONS_Details {
     errorMessage: string;
 }
 export interface GET_PROJECT_GLOB_EXPAND_FAILED_Details {
+    glob: string[];
     projectFilePath: string;
     errorMessage: string;
 }
@@ -288,12 +301,14 @@ export function getDefaultInMemoryProject(srcFile: string): TypeScriptProjectFil
     files = increaseProjectForReferenceAndImports(files);
     files = uniq(files.map(fsu.consistentPath));
 
-    let project = {
+    let project: TypeScriptProjectSpecification = {
         compilerOptions: defaults,
         files,
         typings: typings.ours.concat(typings.implicit),
         formatCodeOptions: formatting.defaultFormatCodeOptions(),
-        compileOnSave: true
+        compileOnSave: true,
+        buildOnSave: false,
+        scripts: {}
     };
 
     return {
@@ -403,7 +418,10 @@ export function getProjectSync(pathOrSrcFile: string): TypeScriptProjectFileDeta
         formatCodeOptions: formatting.makeFormatCodeOptions(projectSpec.formatCodeOptions),
         compileOnSave: projectSpec.compileOnSave == undefined ? true : projectSpec.compileOnSave,
         package: pkg,
-        typings: []
+        typings: [],
+        externalTranspiler: projectSpec.externalTranspiler == undefined ? undefined : projectSpec.externalTranspiler,
+        scripts: projectSpec.scripts || {},
+        buildOnSave: !!projectSpec.buildOnSave
     };
 
     // Validate the raw compiler options before converting them to TS compiler options
@@ -412,7 +430,7 @@ export function getProjectSync(pathOrSrcFile: string): TypeScriptProjectFileDeta
         throw errorWithDetails<GET_PROJECT_PROJECT_FILE_INVALID_OPTIONS_Details>(
             new Error(errors.GET_PROJECT_PROJECT_FILE_INVALID_OPTIONS),
             { projectFilePath: fsu.consistentPath(projectFile), errorMessage: validationResult.errorMessage }
-            );
+        );
     }
 
     // Convert the raw options to TS options
@@ -511,17 +529,17 @@ function increaseProjectForReferenceAndImports(files: string[]): string[] {
                     return null;
                 }).filter(file=> !!file)
                     .concat(
-                        preProcessedFileInfo.importedFiles
-                            .filter((fileReference) => pathIsRelative(fileReference.fileName))
-                            .map(fileReference => {
-                                var file = path.resolve(dir, fileReference.fileName + '.ts');
-                                if (!fs.existsSync(file)) {
-                                    file = path.resolve(dir, fileReference.fileName + '.d.ts');
-                                }
-                                return file;
-                            })
-                        )
-                );
+                    preProcessedFileInfo.importedFiles
+                        .filter((fileReference) => pathIsRelative(fileReference.fileName))
+                        .map(fileReference => {
+                            var file = path.resolve(dir, fileReference.fileName + '.ts');
+                            if (!fs.existsSync(file)) {
+                                file = path.resolve(dir, fileReference.fileName + '.d.ts');
+                            }
+                            return file;
+                        })
+                    )
+            );
         });
 
         return selectMany(referenced);

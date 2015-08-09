@@ -3,6 +3,7 @@ import * as fsu from "../utils/fsUtil";
 import fs = require('fs');
 import path = require('path');
 import os = require('os');
+import child_process = require("child_process");
 import mkdirp = require('mkdirp');
 var fuzzaldrin: { filter: (list: any[], prefix: string, property?: { key: string }) => any } = require('fuzzaldrin');
 import {isTransformerFile} from "./transformers/transformer";
@@ -75,13 +76,19 @@ export interface QuickInfoResponse {
 export function quickInfo(query: QuickInfoQuery): Promise<QuickInfoResponse> {
     consistentPath(query);
     var project = getOrCreateProject(query.filePath);
+    if (!project.includesSourceFile(query.filePath)) {
+        return Promise.resolve({ valid: false });
+    }
     var info = project.languageService.getQuickInfoAtPosition(query.filePath, query.position);
-    if (!info) return Promise.resolve({ valid: false });
-    else return resolve({
-        valid: true,
-        name: ts.displayPartsToString(info.displayParts || []),
-        comment: ts.displayPartsToString(info.documentation || []),
-    });
+    if (!info) {
+        return Promise.resolve({ valid: false });
+    } else {
+        return resolve({
+            valid: true,
+            name: ts.displayPartsToString(info.displayParts || []),
+            comment: ts.displayPartsToString(info.documentation || [])
+        });
+    }
 }
 
 export interface BuildQuery extends FilePathQuery { }
@@ -95,10 +102,13 @@ export function build(query: BuildQuery): Promise<BuildResponse> {
     consistentPath(query);
     var proj = getOrCreateProject(query.filePath);
 
-    var totalCount = proj.projectFile.project.files.length;
+    /** I am assuming ther was at least one file. How else would we even get here? */
+    let filesToEmit = proj.projectFile.project.compilerOptions.out ? [proj.projectFile.project.files[0]] : proj.projectFile.project.files;
+
+    let totalCount = filesToEmit.length;
     var builtCount = 0;
     var errorCount = 0;
-    var outputs = proj.projectFile.project.files.map((filePath) => {
+    let outputs: EmitOutput[] = filesToEmit.map((filePath) => {
         var output = building.emitFile(proj, filePath);
         builtCount++;
         errorCount = errorCount + output.errors.length;
@@ -114,7 +124,8 @@ export function build(query: BuildQuery): Promise<BuildResponse> {
     });
 
     // If there is a package.json with typescript we also output a big main .d.ts for easier use
-    if (proj.projectFile.project.compilerOptions.declaration
+    if (!proj.projectFile.project.compilerOptions.out
+        && proj.projectFile.project.compilerOptions.declaration
         && proj.projectFile.project.package
         && proj.projectFile.project.package.name
         && proj.projectFile.project.package.definition) {
@@ -162,6 +173,18 @@ declare module "${modulePath}"{
         let joinedDtsCode = finalCode.join(os.EOL);
         mkdirp.sync(path.dirname(defLocation));
         fs.writeFileSync(defLocation, joinedDtsCode);
+    }
+
+    // If there is a post build script to run ... run it
+    if (proj.projectFile.project.scripts
+        && proj.projectFile.project.scripts.postbuild) {
+        child_process.exec(proj.projectFile.project.scripts.postbuild, { cwd: proj.projectFile.projectFileDirectory }, (err, stdout, stderr) => {
+            if (err) {
+                console.error('postbuild failed!');
+                console.error(proj.projectFile.project.scripts.postbuild);
+                console.error(stderr);
+            }
+        });
     }
 
     let tsFilesWithInvalidEmit = outputs
@@ -395,11 +418,13 @@ export interface EditTextQuery extends FilePathQuery {
 }
 export function editText(query: EditTextQuery): Promise<any> {
     consistentPath(query);
-    var lsh = getOrCreateProject(query.filePath).languageServiceHost;
-
-    // Apply the update to the pseudo ts file
-    var filePath = transformer.getPseudoFilePath(query.filePath);
-    lsh.editScript(filePath, query.start, query.end, query.newText);
+    let project = getOrCreateProject(query.filePath);
+    if (project.includesSourceFile(query.filePath)) {
+        let lsh = project.languageServiceHost;
+        // Apply the update to the pseudo ts file
+        let filePath = transformer.getPseudoFilePath(query.filePath);
+        lsh.editScript(filePath, query.start, query.end, query.newText);
+    }
     return resolve({});
 }
 
@@ -418,6 +443,13 @@ export function errorsForFile(query: FilePathQuery): Promise<{
     errors: TSError[]
 }> {
     consistentPath(query);
+    let project: project.Project;
+
+    try {
+        project = getOrCreateProject(query.filePath);
+    } catch (ex) {
+        return resolve({ errors: [] });
+    }
 
     // for file path errors in transformer
     if (isTransformerFile(query.filePath)) {
@@ -429,8 +461,26 @@ export function errorsForFile(query: FilePathQuery): Promise<{
         return resolve({ errors: errors });
     }
     else {
-        return resolve({ errors: getDiagnositcsByFilePath(query).map(building.diagnosticToTSError) });
+        let result: TSError[];
+
+        if (project.includesSourceFile(query.filePath)) {
+            result = getDiagnositcsByFilePath(query).map(building.diagnosticToTSError);
+        } else {
+            result = notInContextResult(query.filePath);
+        }
+
+        return resolve({ errors: result });
     }
+}
+
+function notInContextResult(fileName: string) {
+    return [{
+        filePath: fileName,
+        startPos: { line: 0, col: 0 },
+        endPos: { line: 0, col: 0 },
+        message: "The file \"" + fileName + "\" is not included in the TypeScript compilation context.  If this is not intended, please check the \"files\" or \"filesGlob\" section of your tsconfig.json file.",
+        preview: ""
+    }];
 }
 
 export interface GetRenameInfoQuery extends FilePathPositionQuery { }
@@ -575,6 +625,41 @@ export function getNavigationBarItems(query: FilePathQuery): Promise<GetNavigati
     })
 
     return resolve({ items });
+}
+
+export interface SemanticTreeQuery extends FilePathQuery { }
+export interface SemanticTreeReponse {
+    nodes: SemanticTreeNode[];
+}
+function navigationBarItemToSemanticTreeNode(item: ts.NavigationBarItem, project: project.Project, query: FilePathQuery): SemanticTreeNode {
+    var toReturn: SemanticTreeNode = {
+        text: item.text,
+        kind: item.kind,
+        kindModifiers: item.kindModifiers,
+        start: project.languageServiceHost.getPositionFromIndex(query.filePath, item.spans[0].start),
+        end: project.languageServiceHost.getPositionFromIndex(query.filePath, item.spans[0].start + item.spans[0].length),
+        subNodes: item.childItems ? item.childItems.map(ci => navigationBarItemToSemanticTreeNode(ci, project, query)) : []
+    }
+    return toReturn;
+}
+export function getSemtanticTree(query: SemanticTreeQuery): Promise<SemanticTreeReponse> {
+    consistentPath(query);
+    var project = getOrCreateProject(query.filePath);
+
+    var navBarItems = project.languageService.getNavigationBarItems(query.filePath);
+
+    // remove the first global (whatever that is???)
+    if (navBarItems.length && navBarItems[0].text == "<global>") {
+        navBarItems.shift();
+    }
+
+    // Sort items by first spans:
+    sortNavbarItemsBySpan(navBarItems);
+
+    // convert to SemanticTreeNodes
+    var nodes = navBarItems.map(nbi => navigationBarItemToSemanticTreeNode(nbi, project, query));
+
+    return resolve({ nodes });
 }
 
 //--------------------------------------------------------------------------
@@ -767,17 +852,31 @@ import * as ast from "./fixmyts/astUtils";
 import {allQuickFixes} from "./fixmyts/quickFixRegistry";
 function getInfoForQuickFixAnalysis(query: FilePathPositionQuery): QuickFixQueryInformation {
     consistentPath(query);
-    var project = getOrCreateProject(query.filePath);
-    var program = project.languageService.getProgram();
-    var sourceFile = program.getSourceFile(query.filePath);
-    var sourceFileText = sourceFile.getFullText();
-    var fileErrors = getDiagnositcsByFilePath(query);
-    /** We want errors that are *touching* and thefore expand the query position by one */
-    var positionErrors = fileErrors.filter(e=> ((e.start - 1) < query.position) && (e.start + e.length + 1) > query.position);
-    var positionErrorMessages = positionErrors.map(e=> ts.flattenDiagnosticMessageText(e.messageText, os.EOL));
-    var positionNode: ts.Node = ts.getTokenAtPosition(sourceFile, query.position);
-    var service = project.languageService;
-    var typeChecker = program.getTypeChecker();
+    let project = getOrCreateProject(query.filePath);
+    let program = project.languageService.getProgram();
+    let sourceFile = program.getSourceFile(query.filePath);
+    let sourceFileText: string,
+        fileErrors: ts.Diagnostic[],
+        positionErrors: ts.Diagnostic[],
+        positionErrorMessages: string[],
+        positionNode: ts.Node;
+    if (project.includesSourceFile(query.filePath)) {
+        sourceFileText = sourceFile.getFullText();
+        fileErrors = getDiagnositcsByFilePath(query);
+        /** We want errors that are *touching* and thefore expand the query position by one */
+        positionErrors = fileErrors.filter(e=> ((e.start - 1) < query.position) && (e.start + e.length + 1) > query.position);
+        positionErrorMessages = positionErrors.map(e=> ts.flattenDiagnosticMessageText(e.messageText, os.EOL));
+        positionNode = ts.getTokenAtPosition(sourceFile, query.position);
+    } else {
+        sourceFileText = "";
+        fileErrors = [];
+        positionErrors = [];
+        positionErrorMessages = [];
+        positionNode = undefined;
+    }
+
+    let service = project.languageService;
+    let typeChecker = program.getTypeChecker();
 
     return {
         project,
@@ -791,7 +890,7 @@ function getInfoForQuickFixAnalysis(query: FilePathPositionQuery): QuickFixQuery
         positionNode,
         service,
         typeChecker,
-        filePath: sourceFile.fileName
+        filePath: query.filePath
     };
 }
 
@@ -809,6 +908,12 @@ export interface GetQuickFixesResponse {
 }
 export function getQuickFixes(query: GetQuickFixesQuery): Promise<GetQuickFixesResponse> {
     consistentPath(query);
+    var project = getOrCreateProject(query.filePath);
+
+    if (!project.includesSourceFile(query.filePath)) {
+        return resolve({ fixes: [] });
+    }
+
     var info = getInfoForQuickFixAnalysis(query);
 
     // And then we let the quickFix determine if it wants provide any fixes for this file
@@ -863,9 +968,11 @@ interface GetOutputJsResponse {
 }
 export function getOutputJs(query: FilePathQuery): Promise<GetOutputJsResponse> {
     consistentPath(query);
+
     var project = getOrCreateProject(query.filePath);
     var output = getRawOutput(project, query.filePath);
     var jsFile = output.outputFiles.filter(x=> path.extname(x.name) == ".js")[0];
+
     if (!jsFile || output.emitSkipped) {
         return resolve({});
     } else {
@@ -881,6 +988,11 @@ export function getOutputJsStatus(query: FilePathQuery): Promise<GetOutputJsStat
     var project = getOrCreateProject(query.filePath);
     var output = getRawOutput(project, query.filePath);
     if (output.emitSkipped) {
+        if (output.outputFiles && output.outputFiles.length === 1) {
+            if (output.outputFiles[0].text === building.Not_In_Context) {
+                return resolve({ emitDiffers: false });
+            }
+        }
         return resolve({ emitDiffers: true });
     }
     var jsFile = output.outputFiles.filter(x=> path.extname(x.name) == ".js")[0];
@@ -926,4 +1038,73 @@ export function createProject(query: CreateProjectQuery): Promise<CreateProjectR
     var projectFile = tsconfig.createProjectRootSync(query.filePath);
     queryParent.setConfigurationError({ projectFilePath: query.filePath, error: null });
     return resolve({ createdFilePath: projectFile.projectFilePath });
+}
+
+/**
+ * Toggle breakpoint
+ */
+export interface ToggleBreakpointQuery extends FilePathPositionQuery { }
+export interface ToggleBreakpointResponse {
+    refactorings: qf.RefactoringsByFilePath;
+}
+export function toggleBreakpoint(query: ToggleBreakpointQuery): Promise<ToggleBreakpointResponse> {
+    consistentPath(query);
+    var project = getOrCreateProject(query.filePath);
+
+    // Get the node at the current location.
+    let program = project.languageService.getProgram();
+    let sourceFile = program.getSourceFile(query.filePath);
+    let sourceFileText = sourceFile.getFullText();
+    let positionNode = ts.getTokenAtPosition(sourceFile, query.position);
+
+    let refactoring: Refactoring;
+
+    // Because we add a debugger *before* the current token
+    //  ... just preemptively check the previous token to see if *that* is a debugger keyword by any chance
+    if (positionNode.kind != ts.SyntaxKind.DebuggerKeyword && positionNode.getFullStart() > 0) {
+        let previousNode = ts.getTokenAtPosition(sourceFile, positionNode.getFullStart() - 1);
+        // Note: the previous node might be `debugger`
+        if (previousNode.kind == ts.SyntaxKind.DebuggerStatement) {
+            positionNode = previousNode;
+        }
+        // Or `debugger;` (previous node would be `;` but parent is the right one)
+        if (previousNode.parent && previousNode.parent.kind == ts.SyntaxKind.DebuggerStatement) {
+            positionNode = previousNode.parent;
+        }
+    }
+
+    // If it is a debugger keyword ... remove it
+    if (positionNode.kind == ts.SyntaxKind.DebuggerKeyword || positionNode.kind == ts.SyntaxKind.DebuggerStatement) {
+        let start = positionNode.getFullStart();
+        let end = start + positionNode.getFullWidth();
+
+        // also get trailing semicolons
+        while (end < sourceFileText.length && sourceFileText[end] == ';') {
+            end = end + 1;
+        }
+
+        refactoring = {
+            filePath: query.filePath,
+            span: {
+                start: start,
+                length: end - start
+            },
+            newText: ''
+        }
+    }
+    // Otherwise add a breakpoint; *before* the current token whatever that may be
+    else {
+        let toInsert = 'debugger;';
+        refactoring = {
+            filePath: query.filePath,
+            span: {
+                start: positionNode.getFullStart(),
+                length: 0
+            },
+            newText: toInsert
+        }
+    }
+
+    var refactorings = qf.getRefactoringsByFilePath(refactoring ? [refactoring] : []);
+    return resolve({ refactorings });
 }

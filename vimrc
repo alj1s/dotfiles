@@ -31,4 +31,7 @@ set nu
 set list
 set autoindent
 set smartindent
-set expandtab tabstop=4 shiftwidth=4 smarttab softtabstop=4
+set expandtab tabstop=2 shiftwidth=2 smarttab softtabstop=2
+
+let g:EditorConfig_exec_path = 'usr/local/bin/editorConfig'
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']

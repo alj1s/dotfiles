@@ -2,6 +2,7 @@ var fsu = require("../utils/fsUtil");
 var fs = require('fs');
 var path = require('path');
 var os = require('os');
+var child_process = require("child_process");
 var mkdirp = require('mkdirp');
 var fuzzaldrin = require('fuzzaldrin');
 var transformer_1 = require("./transformers/transformer");
@@ -27,25 +28,31 @@ exports.echo = echo;
 function quickInfo(query) {
     projectCache_1.consistentPath(query);
     var project = projectCache_1.getOrCreateProject(query.filePath);
-    var info = project.languageService.getQuickInfoAtPosition(query.filePath, query.position);
-    if (!info)
+    if (!project.includesSourceFile(query.filePath)) {
         return Promise.resolve({ valid: false });
-    else
+    }
+    var info = project.languageService.getQuickInfoAtPosition(query.filePath, query.position);
+    if (!info) {
+        return Promise.resolve({ valid: false });
+    }
+    else {
         return resolve({
             valid: true,
             name: ts.displayPartsToString(info.displayParts || []),
-            comment: ts.displayPartsToString(info.documentation || []),
+            comment: ts.displayPartsToString(info.documentation || [])
         });
+    }
 }
 exports.quickInfo = quickInfo;
 var building = require('./modules/building');
 function build(query) {
     projectCache_1.consistentPath(query);
     var proj = projectCache_1.getOrCreateProject(query.filePath);
-    var totalCount = proj.projectFile.project.files.length;
+    var filesToEmit = proj.projectFile.project.compilerOptions.out ? [proj.projectFile.project.files[0]] : proj.projectFile.project.files;
+    var totalCount = filesToEmit.length;
     var builtCount = 0;
     var errorCount = 0;
-    var outputs = proj.projectFile.project.files.map(function (filePath) {
+    var outputs = filesToEmit.map(function (filePath) {
         var output = building.emitFile(proj, filePath);
         builtCount++;
         errorCount = errorCount + output.errors.length;
@@ -59,7 +66,8 @@ function build(query) {
         });
         return output;
     });
-    if (proj.projectFile.project.compilerOptions.declaration
+    if (!proj.projectFile.project.compilerOptions.out
+        && proj.projectFile.project.compilerOptions.declaration
         && proj.projectFile.project.package
         && proj.projectFile.project.package.name
         && proj.projectFile.project.package.definition) {
@@ -88,6 +96,16 @@ function build(query) {
         var joinedDtsCode = finalCode.join(os.EOL);
         mkdirp.sync(path.dirname(defLocation));
         fs.writeFileSync(defLocation, joinedDtsCode);
+    }
+    if (proj.projectFile.project.scripts
+        && proj.projectFile.project.scripts.postbuild) {
+        child_process.exec(proj.projectFile.project.scripts.postbuild, { cwd: proj.projectFile.projectFileDirectory }, function (err, stdout, stderr) {
+            if (err) {
+                console.error('postbuild failed!');
+                console.error(proj.projectFile.project.scripts.postbuild);
+                console.error(stderr);
+            }
+        });
     }
     var tsFilesWithInvalidEmit = outputs
         .filter(function (o) { return o.emitError; })
@@ -239,9 +257,12 @@ function updateText(query) {
 exports.updateText = updateText;
 function editText(query) {
     projectCache_1.consistentPath(query);
-    var lsh = projectCache_1.getOrCreateProject(query.filePath).languageServiceHost;
-    var filePath = transformer.getPseudoFilePath(query.filePath);
-    lsh.editScript(filePath, query.start, query.end, query.newText);
+    var project = projectCache_1.getOrCreateProject(query.filePath);
+    if (project.includesSourceFile(query.filePath)) {
+        var lsh = project.languageServiceHost;
+        var filePath = transformer.getPseudoFilePath(query.filePath);
+        lsh.editScript(filePath, query.start, query.end, query.newText);
+    }
     return resolve({});
 }
 exports.editText = editText;
@@ -256,6 +277,13 @@ function getDiagnositcsByFilePath(query) {
 }
 function errorsForFile(query) {
     projectCache_1.consistentPath(query);
+    var project;
+    try {
+        project = projectCache_1.getOrCreateProject(query.filePath);
+    }
+    catch (ex) {
+        return resolve({ errors: [] });
+    }
     if (transformer_1.isTransformerFile(query.filePath)) {
         var filePath = transformer.getPseudoFilePath(query.filePath);
         var errors = getDiagnositcsByFilePath({ filePath: filePath }).map(building.diagnosticToTSError);
@@ -265,10 +293,26 @@ function errorsForFile(query) {
         return resolve({ errors: errors });
     }
     else {
-        return resolve({ errors: getDiagnositcsByFilePath(query).map(building.diagnosticToTSError) });
+        var result;
+        if (project.includesSourceFile(query.filePath)) {
+            result = getDiagnositcsByFilePath(query).map(building.diagnosticToTSError);
+        }
+        else {
+            result = notInContextResult(query.filePath);
+        }
+        return resolve({ errors: result });
     }
 }
 exports.errorsForFile = errorsForFile;
+function notInContextResult(fileName) {
+    return [{
+            filePath: fileName,
+            startPos: { line: 0, col: 0 },
+            endPos: { line: 0, col: 0 },
+            message: "The file \"" + fileName + "\" is not included in the TypeScript compilation context.  If this is not intended, please check the \"files\" or \"filesGlob\" section of your tsconfig.json file.",
+            preview: ""
+        }];
+}
 function getRenameInfo(query) {
     projectCache_1.consistentPath(query);
     var project = projectCache_1.getOrCreateProject(query.filePath);
@@ -360,6 +404,29 @@ function getNavigationBarItems(query) {
     return resolve({ items: items });
 }
 exports.getNavigationBarItems = getNavigationBarItems;
+function navigationBarItemToSemanticTreeNode(item, project, query) {
+    var toReturn = {
+        text: item.text,
+        kind: item.kind,
+        kindModifiers: item.kindModifiers,
+        start: project.languageServiceHost.getPositionFromIndex(query.filePath, item.spans[0].start),
+        end: project.languageServiceHost.getPositionFromIndex(query.filePath, item.spans[0].start + item.spans[0].length),
+        subNodes: item.childItems ? item.childItems.map(function (ci) { return navigationBarItemToSemanticTreeNode(ci, project, query); }) : []
+    };
+    return toReturn;
+}
+function getSemtanticTree(query) {
+    projectCache_1.consistentPath(query);
+    var project = projectCache_1.getOrCreateProject(query.filePath);
+    var navBarItems = project.languageService.getNavigationBarItems(query.filePath);
+    if (navBarItems.length && navBarItems[0].text == "<global>") {
+        navBarItems.shift();
+    }
+    sortNavbarItemsBySpan(navBarItems);
+    var nodes = navBarItems.map(function (nbi) { return navigationBarItemToSemanticTreeNode(nbi, project, query); });
+    return resolve({ nodes: nodes });
+}
+exports.getSemtanticTree = getSemtanticTree;
 function getNavigateToItems(query) {
     projectCache_1.consistentPath(query);
     var project = projectCache_1.getOrCreateProject(query.filePath);
@@ -370,9 +437,9 @@ function getNavigateToItems(query) {
         if (result !== undefined) {
             return result;
         }
-        if (declaration.name.kind === 133) {
+        if (declaration.name.kind === ts.SyntaxKind.ComputedPropertyName) {
             var expr = declaration.name.expression;
-            if (expr.kind === 163) {
+            if (expr.kind === ts.SyntaxKind.PropertyAccessExpression) {
                 return expr.name.text;
             }
             return getTextOfIdentifierOrLiteral(expr);
@@ -380,9 +447,9 @@ function getNavigateToItems(query) {
         return undefined;
     }
     function getTextOfIdentifierOrLiteral(node) {
-        if (node.kind === 66 ||
-            node.kind === 8 ||
-            node.kind === 7) {
+        if (node.kind === ts.SyntaxKind.Identifier ||
+            node.kind === ts.SyntaxKind.StringLiteral ||
+            node.kind === ts.SyntaxKind.NumericLiteral) {
             return node.text;
         }
         return undefined;
@@ -480,11 +547,21 @@ function getInfoForQuickFixAnalysis(query) {
     var project = projectCache_1.getOrCreateProject(query.filePath);
     var program = project.languageService.getProgram();
     var sourceFile = program.getSourceFile(query.filePath);
-    var sourceFileText = sourceFile.getFullText();
-    var fileErrors = getDiagnositcsByFilePath(query);
-    var positionErrors = fileErrors.filter(function (e) { return ((e.start - 1) < query.position) && (e.start + e.length + 1) > query.position; });
-    var positionErrorMessages = positionErrors.map(function (e) { return ts.flattenDiagnosticMessageText(e.messageText, os.EOL); });
-    var positionNode = ts.getTokenAtPosition(sourceFile, query.position);
+    var sourceFileText, fileErrors, positionErrors, positionErrorMessages, positionNode;
+    if (project.includesSourceFile(query.filePath)) {
+        sourceFileText = sourceFile.getFullText();
+        fileErrors = getDiagnositcsByFilePath(query);
+        positionErrors = fileErrors.filter(function (e) { return ((e.start - 1) < query.position) && (e.start + e.length + 1) > query.position; });
+        positionErrorMessages = positionErrors.map(function (e) { return ts.flattenDiagnosticMessageText(e.messageText, os.EOL); });
+        positionNode = ts.getTokenAtPosition(sourceFile, query.position);
+    }
+    else {
+        sourceFileText = "";
+        fileErrors = [];
+        positionErrors = [];
+        positionErrorMessages = [];
+        positionNode = undefined;
+    }
     var service = project.languageService;
     var typeChecker = program.getTypeChecker();
     return {
@@ -499,11 +576,15 @@ function getInfoForQuickFixAnalysis(query) {
         positionNode: positionNode,
         service: service,
         typeChecker: typeChecker,
-        filePath: sourceFile.fileName
+        filePath: query.filePath
     };
 }
 function getQuickFixes(query) {
     projectCache_1.consistentPath(query);
+    var project = projectCache_1.getOrCreateProject(query.filePath);
+    if (!project.includesSourceFile(query.filePath)) {
+        return resolve({ fixes: [] });
+    }
     var info = getInfoForQuickFixAnalysis(query);
     var fixes = quickFixRegistry_1.allQuickFixes
         .map(function (x) {
@@ -551,6 +632,11 @@ function getOutputJsStatus(query) {
     var project = projectCache_1.getOrCreateProject(query.filePath);
     var output = building_1.getRawOutput(project, query.filePath);
     if (output.emitSkipped) {
+        if (output.outputFiles && output.outputFiles.length === 1) {
+            if (output.outputFiles[0].text === building.Not_In_Context) {
+                return resolve({ emitDiffers: false });
+            }
+        }
         return resolve({ emitDiffers: true });
     }
     var jsFile = output.outputFiles.filter(function (x) { return path.extname(x.name) == ".js"; })[0];
@@ -585,3 +671,50 @@ function createProject(query) {
     return resolve({ createdFilePath: projectFile.projectFilePath });
 }
 exports.createProject = createProject;
+function toggleBreakpoint(query) {
+    projectCache_1.consistentPath(query);
+    var project = projectCache_1.getOrCreateProject(query.filePath);
+    var program = project.languageService.getProgram();
+    var sourceFile = program.getSourceFile(query.filePath);
+    var sourceFileText = sourceFile.getFullText();
+    var positionNode = ts.getTokenAtPosition(sourceFile, query.position);
+    var refactoring;
+    if (positionNode.kind != ts.SyntaxKind.DebuggerKeyword && positionNode.getFullStart() > 0) {
+        var previousNode = ts.getTokenAtPosition(sourceFile, positionNode.getFullStart() - 1);
+        if (previousNode.kind == ts.SyntaxKind.DebuggerStatement) {
+            positionNode = previousNode;
+        }
+        if (previousNode.parent && previousNode.parent.kind == ts.SyntaxKind.DebuggerStatement) {
+            positionNode = previousNode.parent;
+        }
+    }
+    if (positionNode.kind == ts.SyntaxKind.DebuggerKeyword || positionNode.kind == ts.SyntaxKind.DebuggerStatement) {
+        var start = positionNode.getFullStart();
+        var end = start + positionNode.getFullWidth();
+        while (end < sourceFileText.length && sourceFileText[end] == ';') {
+            end = end + 1;
+        }
+        refactoring = {
+            filePath: query.filePath,
+            span: {
+                start: start,
+                length: end - start
+            },
+            newText: ''
+        };
+    }
+    else {
+        var toInsert = 'debugger;';
+        refactoring = {
+            filePath: query.filePath,
+            span: {
+                start: positionNode.getFullStart(),
+                length: 0
+            },
+            newText: toInsert
+        };
+    }
+    var refactorings = qf.getRefactoringsByFilePath(refactoring ? [refactoring] : []);
+    return resolve({ refactorings: refactorings });
+}
+exports.toggleBreakpoint = toggleBreakpoint;

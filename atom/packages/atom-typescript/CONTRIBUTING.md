@@ -1,3 +1,7 @@
+# FAQ 
+
+Please checkout [the FAQ](https://github.com/TypeStrong/atom-typescript/blob/master/docs/faq.md) before creating a new issue :rose:
+
 # TIP
 Before doing any meaningful work or even investigating [please create an issue for discussion](https://github.com/TypeStrong/atom-typescript/issues) so we don't have duplicate work and we don't step on your toes.
 
@@ -21,6 +25,9 @@ You still have to reload atom with `ctrl+alt+r` to test your changes.
 npm link
 ```
 
+## Pull
+Whenever you pull in latest changes, you should run `npm install`. Whenever we update to latest TypeScript we need to recompile all our js to make sure everybody gets the same code.
+
 ## Git
 You need to have git. Note on windows long file paths can be an issue so run:
 
@@ -31,11 +38,10 @@ And use `Shift+Delete` to delete files if simple `delete` doesn't work.
 
 # Various
 
-## Pull
+## NTypeScript
+We use a slightly modified (functionally equivalent) build of TypeScript called NTypeScript. The main motivation behind it is easier debugging and development workflow when consuming it as an NPM package. See [readme for details](https://github.com/TypeStrong/ntypescript#ntypescript).
 
-Whenever you pull in latest changes, you should run `npm install`. Otherwise the output js you get might be different from the desired one. This is because the TypeScript compiler is adding new enum members and that shifts the *js emit* for our code a bit.
-
-Also: Whenever we update to latest TypeScript we need to recompile all our js.
+Update the version used by Atom-TypeScript using `npm install ntypescript@latest --save --save-exact` and then do some manual testing, and then rebuild the whole project.
 
 ## Publishing
 
@@ -58,7 +64,7 @@ Some shortcuts:
 There are *lots of ways* to do this. The ones we use right now:
 
 * You can do `console.error` from `projectService` and it will get logged to the atom's console (`ctrl+alt+i`). That's the quickest.
-* You can call `projectService` in `sync` from the UI thread if you want to debug using atom's built in tools (`ctrl+alt+i`). Set `parent.debug` to true and it takes care of the rest. [Here is the code](https://github.com/TypeStrong/atom-typescript/blob/d88babd82a8390ef43acac474965bc6d2f65083b/lib/worker/parent.ts#L5).
+* You can call `projectService` in `sync` from the UI thread if you want to debug using atom's built in tools (`ctrl+alt+i`). Set `debugSync` to true in `./lib/worker/debug.ts`, and it takes care of the rest.
 
 Also [if there is an error in `projectService` it gets logged to the console as a rejected promise](https://raw.githubusercontent.com/TypeStrong/atom-typescript-examples/master/screens/debugPromises.gif).
 

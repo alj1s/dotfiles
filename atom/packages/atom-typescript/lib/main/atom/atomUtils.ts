@@ -19,10 +19,14 @@ export function getEditorPositionForBufferPosition(editor: AtomCore.IEditor, buf
     return buffer.characterIndexForPosition(bufferPos);
 }
 
-export function isAllowedExtension(ext){
+export function isAllowedExtension(ext: string) {
     return (ext == '.ts' || ext == '.tst' || ext == '.tsx');
 }
 
+export function isActiveEditorOnDiskAndTs() {
+    var editor = atom.workspace.getActiveTextEditor();
+    return onDiskAndTs(editor);
+}
 export function onDiskAndTs(editor: AtomCore.IEditor) {
     if (editor instanceof require('atom').TextEditor) {
         var filePath = editor.getPath();
@@ -249,6 +253,30 @@ export function triggerLinter() {
     atom.commands.dispatch(
         atom.views.getView(atom.workspace.getActiveTextEditor()),
         'linter:lint');
+}
+
+/**
+ * converts "c:\dev\somethin\bar.ts" to "~something\bar".
+ */
+export function getFilePathRelativeToAtomProject(filePath: string) {
+    filePath = fsu.consistentPath(filePath);
+    // Sample:
+    // atom.project.relativize(`D:/REPOS/atom-typescript/lib/main/atom/atomUtils.ts`)
+    return '~' + atom.project.relativize(filePath);
+}
+
+/**
+ * Opens the given file in the same project
+ */
+export function openFile(filePath: string, position: { line?: number; col?: number } = {}) {
+    var config: any = {};
+    if (position.line) {
+        config.initialLine = position.line - 1;
+    }
+    if (position.col) {
+        config.initialColumn = position.col;
+    }
+    atom.workspace.open(filePath, config);
 }
 
 /************

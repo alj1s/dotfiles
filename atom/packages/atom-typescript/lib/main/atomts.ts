@@ -32,6 +32,7 @@ import {$} from "atom-space-pen-views";
 import documentationView = require('./atom/views/documentationView');
 import renameView = require('./atom/views/renameView');
 import mainPanelView = require("./atom/views/mainPanelView");
+import * as semanticView from "./atom/views/semanticView";
 import {getFileStatus} from "./atom/fileStatusCache";
 
 import editorSetup = require("./atom/editorSetup");
@@ -65,11 +66,15 @@ function onlyOnceStuff() {
     if (__onlyOnce) return;
     else __onlyOnce = true;
 
+    mainPanelView.attach();
+
     // Add the documentation view
     documentationView.attach();
 
     // Add the rename view
     renameView.attach();
+
+    semanticView.attach();
 }
 
 /** only called once we have our dependencies */
@@ -102,6 +107,13 @@ function readyToActivate() {
         if (atomUtils.onDiskAndTs(editor)) {
             var filePath = editor.getPath();
 
+            onlyOnceStuff();
+            parent.getProjectFileDetails({filePath}).then((res)=>{
+                mainPanelView.panelView.setTsconfigInUse(res.projectFilePath);
+            }).catch(err=>{
+                mainPanelView.panelView.setTsconfigInUse('');
+            });
+
             // Refresh errors stuff on change active tab.
             // Because the fix might be in the other file
             // or the other file might have made this file have an error
@@ -133,6 +145,11 @@ function readyToActivate() {
             try {
                 // Only once stuff
                 onlyOnceStuff();
+                parent.getProjectFileDetails({filePath}).then((res)=>{
+                    mainPanelView.panelView.setTsconfigInUse(res.projectFilePath);
+                }).catch(err=>{
+                    mainPanelView.panelView.setTsconfigInUse('');
+                });
 
                 // We only do analysis once the file is persisted to disk
                 var onDisk = false;
@@ -141,7 +158,6 @@ function readyToActivate() {
                 }
 
                 // Setup the TS reporter:
-                mainPanelView.attach();
                 hideIfNotActiveOnStart();
 
                 debugAtomTs.runDebugCode({ filePath, editor });

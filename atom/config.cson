@@ -1,23 +1,20 @@
 "*":
   editor:
-    fontSize: 11
+    fontSize: 16
     invisibles: {}
-    fontFamily: "Monoid-Retina"
     showIndentGuide: true
     showInvisibles: true
     tabLength: 4
+    fontFamily: "consolas"
   core:
     themes: [
-      "solarized-dark-ui"
+      "solarized-seti-ui"
       "solarized-dark-syntax"
     ]
     ignoredNames: [
       ".git"
       ".svn"
       ".DS_Store"
-    ]
-    disabledPackages: [
-      "tree-view"
     ]
   "exception-reporting":
     userId: "86022b77-a4a3-4cc0-6c86-6bbbec84094d"
