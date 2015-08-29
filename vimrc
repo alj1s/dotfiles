@@ -28,10 +28,19 @@ set background=dark
 colorscheme solarized
 set relativenumber
 set nu
+
+set listchars=tab:>~,nbsp:_,trail:.
 set list
+
 set autoindent
 set smartindent
 set expandtab tabstop=2 shiftwidth=2 smarttab softtabstop=2
+
+set textwidth=80
+set colorcolumn=+1
+
+nnoremap ; :
+map q <Nop>
 
 let g:EditorConfig_exec_path = 'usr/local/bin/editorConfig'
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']

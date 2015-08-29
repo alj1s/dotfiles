@@ -1,7 +1,6 @@
 - clean: ['~']
 
 - link:
-    ~/.atom: atom
     ~/.gitconfig: gitconfig
     ~/.ssh/config:
         path: ssh/config

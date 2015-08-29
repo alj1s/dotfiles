@@ -86,6 +86,8 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
+
 . `brew --prefix`/etc/profile.d/z.sh
 . ~/.nvm/nvm.sh
 ### Added by the Heroku Toolbelt

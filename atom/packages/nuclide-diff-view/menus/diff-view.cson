@@ -1,3 +1,0 @@
-'context-menu':
-  'atom-text-editor':
-    [{label: 'Open in Diff View', command: 'nuclide-diff-view:open'}]

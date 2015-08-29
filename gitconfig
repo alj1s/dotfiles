@@ -4,6 +4,7 @@
 [core]
 	excludesfile = /Users/andrewjones/.gitignore_global
 	autocrlf = input
+	editor = vim
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -14,7 +15,7 @@
 	clean = git-media-clean %f
 	smudge = git-media-smudge %f
 [push]
-	default = simple
+	default = current
 [mergetool "Kaleidoscope"]
 	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
 	trustexitcode = true
