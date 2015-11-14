@@ -90,5 +90,10 @@ code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 
 . `brew --prefix`/etc/profile.d/z.sh
 . ~/.nvm/nvm.sh
+
+export PATH="$HOME/Library/Python/2.7/lib/python/site-packages/powerline:$HOME/Library/Python/2.7/bin:$PATH"
+powerline-daemon -q
+. /Users/andrewjones/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+export EDITOR=vim
