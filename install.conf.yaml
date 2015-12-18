@@ -2,6 +2,7 @@
 
 - link:
     ~/.gitconfig: gitconfig
+    ~/.hushlogin: hushlogin
     ~/.ssh/config:
         path: ssh/config
         create: true
