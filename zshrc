@@ -89,11 +89,14 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 
 . `brew --prefix`/etc/profile.d/z.sh
-. ~/.nvm/nvm.sh
 
-export PATH="$HOME/Library/Python/2.7/lib/python/site-packages/powerline:$HOME/Library/Python/2.7/bin:$PATH"
+export PATH="/usr/local/lib/python2.7/site-packages:$PATH"
 powerline-daemon -q
-. /Users/andrewjones/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
+. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 export EDITOR=vim
+
+export NVM_DIR="/Users/andrewjones/.nvm"
+export PATH="$NVM_DIR:$PATH"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

@@ -5,7 +5,8 @@
     ~/.ssh/config:
         path: ssh/config
         create: true
-    ~/.vimrc: vimrc
+    ~/.vim:   vim/
+    ~/.vimrc: vim/vimrc
     ~/.zshrc: zshrc
 
 
