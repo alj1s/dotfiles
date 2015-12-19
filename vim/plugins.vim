@@ -19,6 +19,7 @@ Plugin 'gilgigilgil/anderson.vim'
 Plugin 'mattn/emmet-vim'
 
 call vundle#end()
+filetype plugin indent on
 
 map <C-n> :NERDTreeToggle<CR>
 

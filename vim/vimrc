@@ -1,7 +1,6 @@
 set nocompatible
 
 filetype off
-filetype plugin indent on
 
 let s:vimDir = $HOME.'/.vim'
 let s:settings = s:vimDir.'/settings.vim'
@@ -10,8 +9,8 @@ let s:mappings = s:vimDir.'/mappings.vim'
 
 source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
 
-exec ":source ".s:settings
 exec ":source ".s:plugins
+exec ":source ".s:settings
 exec ":source ".s:mappings
 
 colorscheme anderson
