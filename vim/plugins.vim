@@ -3,20 +3,27 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
-Plugin 'derekwyatt/vim-scala'
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'tpope/vim-sensible'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'leafgarland/typescript-vim'
+Plugin 'sheerun/vim-polyglot'
+"Plugin 'leafgarland/typescript-vim'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-surround'
 Plugin 'kien/ctrlp.vim'
-Plugin 'kien/rainbow_parentheses.vim'
+"Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
-Plugin 'rizzatti/dash.vim'
+Plugin 'scrooloose/nerdcommenter'
 Plugin 'gilgigilgil/anderson.vim'
 Plugin 'mattn/emmet-vim'
+Plugin 'junegunn/fzf'
+Plugin 'rking/ag.vim'
+Plugin 'christoomey/vim-tmux-navigator'
+"Plugin 'pangloss/vim-javascript'
+"Plugin 'mxw/vim-jsx'
+Plugin 'airblade/vim-gitgutter'
 
 call vundle#end()
 filetype plugin indent on
@@ -30,3 +37,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+let g:jsx_ext_required = 0
+let g:syntastic_javascript_checkers = ['eslint']
+
+let g:ag_prg="ag --vimgrep"
+let g:ag_working_path_mode="r"

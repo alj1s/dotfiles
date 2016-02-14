@@ -88,6 +88,8 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
 
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 
+eval $(thefuck --alias)
+
 . `brew --prefix`/etc/profile.d/z.sh
 
 export PATH="/usr/local/lib/python2.7/site-packages:$PATH"
@@ -100,3 +102,5 @@ export EDITOR=vim
 export NVM_DIR="/Users/andrewjones/.nvm"
 export PATH="$NVM_DIR:$PATH"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

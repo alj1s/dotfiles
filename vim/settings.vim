@@ -16,4 +16,8 @@ set expandtab tabstop=2 shiftwidth=2 smarttab softtabstop=2
 set textwidth=80
 set colorcolumn=+1
 
+set cursorline
+
+set autochdir
+
 syntax on

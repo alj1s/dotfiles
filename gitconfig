@@ -35,6 +35,7 @@
 [alias]
 	co = checkout
 	cob = checkout -b
+  st = status -sb
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
