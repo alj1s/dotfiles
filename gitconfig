@@ -36,7 +36,20 @@
 	co = checkout
 	cob = checkout -b
   st = status -sb
+	aliases = config --get-regexp alias
+	branches = branch -a
+	tags = tag
+	stashes = stash list
+	unstage = reset -q HEAD --
+	discard = checkout --
+	uncommit = reset --mixed HEAD~
+	amend = commit --amend
+	remotes = remote -v
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
+[help]
+	autocorrect = -1
+[pull]
+	rebase = true
