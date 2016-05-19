@@ -16,7 +16,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'gilgigilgil/anderson.vim'
+Plugin 'ximenean/anderson.vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'junegunn/fzf'
 Plugin 'rking/ag.vim'
@@ -24,6 +24,13 @@ Plugin 'christoomey/vim-tmux-navigator'
 "Plugin 'pangloss/vim-javascript'
 "Plugin 'mxw/vim-jsx'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+"Plugin 'godlygeek/csapprox'i "make gvim colorschemes work in the terminal
+Plugin 'vim-scripts/closetag.vim'
+Plugin 'herrbischoff/cobalt2.vim'
+Plugin 'wakatime/vim-wakatime'
+
 
 call vundle#end()
 filetype plugin indent on
@@ -43,3 +50,11 @@ let g:syntastic_javascript_checkers = ['eslint']
 
 let g:ag_prg="ag --vimgrep"
 let g:ag_working_path_mode="r"
+
+let g:UlitiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJiumpsBackwardTrigger="<c-z>"
+
+let g:UltiSnipsEditSplit="vertical"
+ 
+let g:ctrlp_working_path_mode = 0
