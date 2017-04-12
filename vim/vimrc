@@ -2,6 +2,8 @@ set nocompatible
 
 filetype off
 
+set rtp+=~/.vim
+
 let s:vimDir = $HOME.'/.vim'
 let s:settings = s:vimDir.'/settings.vim'
 let s:plugins = s:vimDir.'/plugins.vim'
@@ -14,4 +16,3 @@ exec ":source ".s:plugins
 exec ":source ".s:settings
 exec ":source ".s:mappings
 exec ":source ".s:overrides
-

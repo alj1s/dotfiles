@@ -6,7 +6,8 @@
 
 "set t_Co=256
 "let g:solarized_termcolors=256
-colorscheme cobalt
+set rtp+=~/.vim
+colorscheme nord
 
 set relativenumber    "display line numbers relative to current position
 set nu                "display line numbers
@@ -23,11 +24,11 @@ set autoindent
 set smartindent
 set expandtab tabstop=2 shiftwidth=2 smarttab softtabstop=2
 
+set term=builtin_ansi
+
 set textwidth=100
 set colorcolumn=+1
 
 set cursorline
-
-set autochdir
 
 syntax on

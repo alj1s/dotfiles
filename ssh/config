@@ -1,3 +1,6 @@
+Host *
+ UseKeychain yes
 
 Host bitbucket.org
  IdentityFile ~/.ssh/id_rsa
+

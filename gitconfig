@@ -2,28 +2,17 @@
 	name = Andrew Jones
 	email = ximenean@hotmail.com
 [core]
-	excludesfile = /Users/andrewjones/.gitignore_global
+	excludesfile = ~/.gitignore
 	autocrlf = input
 	editor = vim
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
 [filter "media"]
 	clean = git media clean %f
 	smudge = git media smudge %f
 	required = true
 [push]
 	default = current
-[mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustexitcode = true
 [merge]
 	tool = meld
-[difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 [difftool]
 	prompt = false
 [mergetool]
@@ -33,18 +22,23 @@
 [color]
 	ui = true
 [alias]
+  a = add -p
+	aliases = config --get-regexp alias
+	amend = commit --amend
+	branches = branch -a
+  c = commit
 	co = checkout
 	cob = checkout -b
-  st = status -sb
-	aliases = config --get-regexp alias
-	branches = branch -a
-	tags = tag
-	stashes = stash list
-	unstage = reset -q HEAD --
 	discard = checkout --
-	uncommit = reset --mixed HEAD~
-	amend = commit --amend
+  f = fetch -p
+  p = push
+  plog = log --graph --pretty='format:%C(red)%d%C(reset)%C(yellow)%h%C(reset) %ar %C(green)%aN%C(reset) %s'
 	remotes = remote -v
+	stashes = stash list
+	tags = tag
+	uncommit = reset --mixed HEAD~
+	unstage = reset -q HEAD --
+  st = status -sb
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f

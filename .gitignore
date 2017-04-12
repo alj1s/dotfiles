@@ -3,3 +3,5 @@ atom/compile-cache
 atom/dev
 atom/.npm
 atom/.node-gyp
+vim/plugged
+vim/.netrwhist
