@@ -17,6 +17,6 @@ highlight Comment cterm=italic
 
 au BufRead,BufNewFile *.es6   setfiletype javascript
 
-autocmd FileType javascript set formatprg=prettier\ --stdin
+autocmd FileType javascript set formatprg=prettier\ --no-semi\ --stdin
 
 autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"

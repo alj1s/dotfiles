@@ -7,12 +7,18 @@ export NVM_DIR="$HOME/.nvm"
 . "/usr/local/opt/nvm/nvm.sh"
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/andrew/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
+
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-#ZSH_THEME="robbyrussell"
+POWERLEVEL9K_MODE='nerdfont-complete'
+ZSH_THEME="powerlevel9k/powerlevel9k"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(vi_mode dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(root_indicator background_jobs node_version history time)
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%{%F{249}%}\u2517%{%F{default}%} \u03bb "
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -56,16 +62,20 @@ export ZSH=/Users/andrew/.oh-my-zsh
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git git-extras node yarn npm jsontools vi-mode history-substring-search zsh-autosuggestions brew)
 
 source $ZSH/oh-my-zsh.sh
-. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+#. /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
 export PATH="$HOME/.fastlane/bin:$PATH"
+export ANDROID_HOME=~/Library/Android/sdk
+export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -87,5 +97,8 @@ export EDITOR='vim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias rni="react-native run-ios"
+alias rna="react-native run-android"
 alias rns="react-native start --reset-cache"
-alias rkwm="brew services restart kwm"
+alias rkwm="brew services restart chunkwm"
+
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

@@ -8,10 +8,12 @@
 "let g:solarized_termcolors=256
 set rtp+=~/.vim
 colorscheme nord
+"colorscheme nova
 
 set relativenumber    "display line numbers relative to current position
 set nu                "display line numbers
 
+set foldmethod=indent
 set showmatch         "show matching object (parens, comment etc)
 set hlsearch          "highlight search term occurrences
 set ignorecase        "ignore case when searching...
@@ -24,11 +26,19 @@ set autoindent
 set smartindent
 set expandtab tabstop=2 shiftwidth=2 smarttab softtabstop=2
 
-set term=builtin_ansi
+if !has('nvim')
+  set term=builtin_ansi
+endif
 
 set textwidth=100
 set colorcolumn=+1
 
+set showcmd
 set cursorline
+
+let mapleader=","
+
+set undofile
+set undodir=~/.vim/undo
 
 syntax on

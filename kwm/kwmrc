@@ -74,6 +74,7 @@ kwmc config spawn left
 */
 
 kwmc rule owner="iTerm2" properties={role="AXDialog"}
+kwmc rule owner="Android Emulator" properties={role="AXDialog"}
 
 /*
 The following commands create rules that

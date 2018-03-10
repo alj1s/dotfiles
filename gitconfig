@@ -1,49 +1,104 @@
 [user]
-	name = Andrew Jones
-	email = ximenean@hotmail.com
+  name = Andrew Jones
+  email = ximenean@hotmail.com
 [core]
-	excludesfile = ~/.gitignore
-	autocrlf = input
-	editor = vim
+	excludesfile = /Users/andrew/.gitignore
+  autocrlf = input
+  editor = vim
 [filter "media"]
-	clean = git media clean %f
-	smudge = git media smudge %f
-	required = true
+  clean = git media clean %f
+  smudge = git media smudge %f
+  required = true
 [push]
-	default = current
+  default = current
 [merge]
-	tool = meld
+  tool = meld
 [difftool]
-	prompt = false
+  prompt = false
 [mergetool]
-	prompt = false
+  prompt = false
 [diff]
-	tool = meld
+  tool = meld
 [color]
-	ui = true
+  pager = true
+  ui = auto
+  status = auto
+  diff = auto
+  branch = auto
+  showBranch = auto
+  interactive = auto
+  grep = auto
+[color "status"]
+  header = black bold
+  branch = cyan
+  nobranch = red
+  unmerged = red
+  untracked = cyan
+  added = green
+  changed = red bold
+[color "diff"]
+  meta = red bold
+  frag = black bold
+  func = blue
+  old = red strike
+  new = green
+  commit = blue
+  whitespace = red
+  context = normal
+[color "branch"]
+  current = cyan
+  local = blue
+  remote = magenta
+  upstream = magenta
+  plain = normal
+[color "decorate"]
+  branch = blue
+  remoteBranch = magenta
+  tag = magenta
+  stash = cyan
+  HEAD = blue
+[color "interactive"]
+  prompt = red
+  header = red bold
+  error = red
+  help = black bold
+[color "grep"]
+  context = normal
+  match = cyan
+  filename = blue
+  function = blue
+  selected = normal
+  separator = red bold
+  linenumber = normal
 [alias]
   a = add -p
-	aliases = config --get-regexp alias
-	amend = commit --amend
-	branches = branch -a
+  aliases = config --get-regexp alias
+  amend = commit --amend
+  branches = branch -a
   c = commit
-	co = checkout
-	cob = checkout -b
-	discard = checkout --
+  co = checkout
+  cob = checkout -b
+  discard = checkout --
   f = fetch -p
   p = push
   plog = log --graph --pretty='format:%C(red)%d%C(reset)%C(yellow)%h%C(reset) %ar %C(green)%aN%C(reset) %s'
-	remotes = remote -v
-	stashes = stash list
-	tags = tag
-	uncommit = reset --mixed HEAD~
-	unstage = reset -q HEAD --
+  remotes = remote -v
+  stashes = stash list
+  tags = tag
+  uncommit = reset --mixed HEAD~
+  unstage = reset -q HEAD --
   st = status -sb
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
-	required = true
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
 [help]
-	autocorrect = -1
+  autocorrect = -1
 [pull]
-	rebase = true
+  rebase = true
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
