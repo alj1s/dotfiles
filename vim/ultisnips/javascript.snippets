@@ -1,0 +1,51 @@
+snippet snap "snap" b
+import serializer from 'enzyme-to-json/serializer';
+
+expect.addSnapshotSerializer(serializer);
+endsnippet
+
+snippet rnjest "rnjest" b
+import React from 'react';
+import "react-native";
+import { shallow } from "enzyme";
+
+describe("$1", () => {});
+endsnippet
+
+snippet test "test" b
+import $1 from "../$2"
+
+describe("$1", () => {
+  it("$3", () => {
+	  $4
+	})
+})
+endsnippet
+
+snippet jest "jest" b
+import React from 'react';
+import { shallow } from "enzyme";
+
+import $1 from "../${2:index}"
+
+describe("$1", () => {
+  it("should be a function", () => {
+	  expect($1).toBeInstanceOf(Function)
+	})
+
+	it("should match the snapshot", () => {
+	  const rendered = shallow(<$1 />)
+		expect(rendered).toMatchSnapshot()
+	})
+
+});
+endsnippet
+
+snippet story "story" b
+import React from "react"
+import { storiesOf } from "@storybook/react-native"
+import $1 from "./index"
+
+storiesOf($2, module).add("default", () => ($3))
+endsnippet
+
