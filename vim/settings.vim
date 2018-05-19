@@ -1,14 +1,5 @@
-"if has("nvim")
-"    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-"else
-"set term=cons25
-"endif
-
-"set t_Co=256
-"let g:solarized_termcolors=256
 set rtp+=~/.vim
 colorscheme nord
-"colorscheme nova
 
 set relativenumber    "display line numbers relative to current position
 set nu                "display line numbers

@@ -1,57 +1,50 @@
 " set the runtime path to include Vundle and initialize
 call plug#begin()
 
+Plug 'FrigoEU/psc-ide-vim'
+Plug 'SirVer/ultisnips'
+Plug 'Valloric/YouCompleteMe'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
-Plug 'flazz/vim-colorschemes'
-"Plug 'sheerun/vim-polyglot'
+Plug 'arcticicestudio/nord-vim'
+Plug 'benmills/vimux'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'epilande/vim-es2015-snippets'
+Plug 'epilande/vim-react-snippets'
+Plug 'ervandew/supertab'
+Plug 'hecal3/vim-leader-guide'
+Plug 'honza/vim-snippets'
+Plug 'junegunn/fzf'
+Plug 'junegunn/vim-easy-align'
+Plug 'karthikv/tradeship-vim'
+Plug 'kien/ctrlp.vim'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'luochen1990/rainbow'
+Plug 'majutsushi/tagbar'
+Plug 'mattn/emmet-vim'
+Plug 'matze/vim-move'
+Plug 'metakirby5/codi.vim'
+Plug 'mileszs/ack.vim'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'raichoo/purescript-vim'
+Plug 'reasonml-editor/vim-reason'
+Plug 'ryanoasis/vim-devicons'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'sjl/gundo.vim'
+Plug 'ternjs/tern_for_vim'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
-Plug 'kien/ctrlp.vim'
-Plug 'kien/rainbow_parentheses.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
-Plug 'ximenean/anderson.vim'
-Plug 'mattn/emmet-vim'
-Plug 'junegunn/fzf'
-Plug 'junegunn/vim-easy-align'
-Plug 'mileszs/ack.vim'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'airblade/vim-gitgutter'
-Plug 'ervandew/supertab'
-Plug 'SirVer/ultisnips'
-Plug 'Valloric/YouCompleteMe'
-Plug 'epilande/vim-es2015-snippets'
-Plug 'epilande/vim-react-snippets'
-Plug 'honza/vim-snippets'
-Plug 'w0rp/ale'
-"Plug 'isRuslan/vim-es6'
-"Plug 'vim-syntastic/syntastic'
-Plug 'vim-scripts/closetag.vim'
-Plug 'herrbischoff/cobalt2.vim'
-Plug 'wakatime/vim-wakatime'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'ryanoasis/vim-devicons'
-Plug 'arcticicestudio/nord-vim'
-Plug 'ternjs/tern_for_vim'
-Plug 'majutsushi/tagbar'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'raichoo/purescript-vim'
-Plug 'FrigoEU/psc-ide-vim'
-Plug 'hecal3/vim-leader-guide'
-Plug 'trevordmiller/nova-vim'
-Plug 'sjl/gundo.vim'
-Plug 'leafgarland/typescript-vim'
-Plug 'wesQ3/vim-windowswap'
-Plug 'matze/vim-move'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'reasonml-editor/vim-reason'
-Plug 'benmills/vimux'
-Plug 'karthikv/tradeship-vim'
+Plug 'vim-scripts/closetag.vim'
+Plug 'w0rp/ale'
+Plug 'wakatime/vim-wakatime'
+Plug 'wesQ3/vim-windowswap'
 
 call plug#end()
 
@@ -127,6 +120,8 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 
 let g:NERDTreeFileExtensionHighlightFullName = 1
 
+"let g:import_sort_auto = 1
+
 let s:brown = "905532"
 let s:aqua =  "3AFFDB"
 let s:blue = "689FB6"
@@ -172,11 +167,7 @@ map <leader>vp :VimuxPromptCommand<CR>
 map <leader>vl :VimuxRunLastCommand<CR>
 map <leader>f :NERDTreeFind<CR>
 
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+let g:rainbow_active = 1
 
 "autocmd BufWritePre *.js Tradeship
-
 "autocmd BufWinEnter * NERDTreeFind

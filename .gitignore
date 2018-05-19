@@ -5,3 +5,8 @@ atom/.npm
 atom/.node-gyp
 vim/plugged
 vim/.netrwhist
+tags
+tags.lock
+tags.temp
+vim/undo/*
+config/
