@@ -3,6 +3,7 @@
 
 . /usr/local/etc/profile.d/z.sh
 
+export TERM="xterm-256color"
 export NVM_DIR="$HOME/.nvm"
 . "/usr/local/opt/nvm/nvm.sh"
 
@@ -71,16 +72,17 @@ source $ZSH/oh-my-zsh.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
-export PATH="$HOME/.fastlane/bin:$PATH"
 export ANDROID_HOME=~/Library/Android/sdk
 export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="$PATH:$HOME/Library/Python/2.7/bin"
 
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
 export EDITOR='vim'
+export SBT_OPTS="-Xms1G -Xmx4G"
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -100,5 +102,12 @@ alias rni="react-native run-ios"
 alias rna="react-native run-android"
 alias rns="react-native start --reset-cache"
 alias rkwm="brew services restart chunkwm"
+
+alias ta="tmux attach -t"
+alias ts="tmux new -s"
+alias tl="tmux ls"
+
+alias l="exa --all --long --color=always --group-directories-first"
+alias ls="colorls"
 
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
