@@ -1,6 +1,7 @@
 [user]
   name = Andrew Jones
   email = ximenean@hotmail.com
+  signingkey = 02AF489DD1A1AAF8B3D153D479BEC17DE36656C9
 [core]
 	excludesfile = /Users/andrew/.gitignore
   autocrlf = input
