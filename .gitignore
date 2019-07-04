@@ -5,6 +5,7 @@ atom/.npm
 atom/.node-gyp
 vim/plugged
 vim/.netrwhist
+vim/swapfiles
 tags
 tags.lock
 tags.temp
