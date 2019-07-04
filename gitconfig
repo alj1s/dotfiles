@@ -4,7 +4,8 @@
 [core]
 	excludesfile = /Users/andrew/.gitignore
   autocrlf = input
-  editor = vim
+	editor = /usr/local/bin/nvim
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [filter "media"]
   clean = git media clean %f
   smudge = git media smudge %f
@@ -21,7 +22,7 @@
   tool = meld
 [color]
   pager = true
-  ui = auto
+	ui = true
   status = auto
   diff = auto
   branch = auto
@@ -37,13 +38,13 @@
   added = green
   changed = red bold
 [color "diff"]
-  meta = red bold
-  frag = black bold
+	meta = yellow
+	frag = magenta bold
   func = blue
-  old = red strike
-  new = green
-  commit = blue
-  whitespace = red
+	old = red bold
+	new = green bold
+	commit = yellow bold
+	whitespace = red reverse
   context = normal
 [color "branch"]
   current = cyan
@@ -102,3 +103,12 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[rerere]
+	enabled = true
+[commit]
+  template = ~/.gitmessage
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
