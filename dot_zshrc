@@ -5,8 +5,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# If you come from bash you might have to change your $PATH.
-export PATH=/opt/homebrew/bin:$PATH
+PACKAGE_BASE=`python3 -m site | grep USER_BASE | awk '{print $2}' | tr -d "'"`
+PACKAGE_BIN=${PACKAGE_BASE}/bin
+export PATH=$PACKAGE_BIN:/opt/homebrew/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/andrew/.oh-my-zsh"
@@ -78,9 +79,11 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR='vim'
 
+alias cat="bat"
+alias ls="exa"
 alias vim='nvim'
 
-alias ta='timux attach -t'
+alias ta='tmux attach -t'
 alias tn='tmux new -s'
 alias tl='tmux ls'
 
@@ -91,3 +94,4 @@ alias tl='tmux ls'
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
+source $(brew --prefix)/etc/profile.d/z.sh
