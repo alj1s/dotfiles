@@ -22,7 +22,7 @@ Plug 'nvim-telescope/telescope.nvim'
 " end of telescope requirements
 
 Plug 'neovim/nvim-lspconfig'
-Plug 'kabouzeid/nvim-lspinstall'
+Plug 'williamboman/nvim-lsp-installer'
 Plug 'glepnir/lspsaga.nvim'
 Plug 'hrsh7th/nvim-compe'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -98,9 +98,9 @@ xnoremap <silent> ga    <cmd>Lspsaga range_code_action<CR>
 nnoremap <silent> gs    <cmd>Lspsaga signature_help<CR>
 
 lua << EOF
-require("lsp")
+--require("lsp")
 require("treesitter")
-require("completion")
+--require("completion")
 local neogit = require('neogit')
 neogit.setup {
   integrations = {
