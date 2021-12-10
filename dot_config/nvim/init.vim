@@ -97,10 +97,25 @@ nnoremap <silent> ga    <cmd>Lspsaga code_action<CR>
 xnoremap <silent> ga    <cmd>Lspsaga range_code_action<CR>
 nnoremap <silent> gs    <cmd>Lspsaga signature_help<CR>
 
+" open new split panes to right and below
+set splitright
+set splitbelow
+" turn terminal to normal mode with escape
+tnoremap <Esc> <C-\><C-n>
+" start terminal in insert mode
+au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+" open terminal on ctrl+n
+function! OpenTerminal()
+  split term://bash
+  resize 10
+endfunction
+nnoremap <c-n> :call OpenTerminal()<CR>
+
 lua << EOF
 --require("lsp")
 require("treesitter")
 --require("completion")
+require('gitsigns').setup({})
 local neogit = require('neogit')
 neogit.setup {
   integrations = {
@@ -109,6 +124,3 @@ neogit.setup {
 }
 EOF
 
-lua << EOF
- require('gitsigns').setup({})
-EOF
