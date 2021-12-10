@@ -31,7 +31,6 @@ Plug 'folke/trouble.nvim'
 
 Plug 'lewis6991/gitsigns.nvim'
 
-"Plug 'folke/which-key.nvim'
 Plug 'liuchengxu/vim-which-key'
 Plug 'sbdchd/neoformat'
 Plug 'TimUntersberger/neogit'
