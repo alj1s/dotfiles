@@ -79,9 +79,11 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR='vim'
 
-alias cat="bat"
-alias ls="exa"
+alias cat='bat'
+alias ls='exa'
 alias vim='nvim'
+alias v='nvim'
+alias f='ranger'
 
 alias ta='tmux attach -t'
 alias tn='tmux new -s'
