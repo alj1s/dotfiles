@@ -9,7 +9,7 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     install_path,
   }
   print "Installing packer close and reopen Neovim..."
-  vim.cmd [[packeradd packer.nvim]]
+  vim.cmd [[packadd packer.nvim]]
 end
 
 local packer = require('packer')
