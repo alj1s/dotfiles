@@ -10,9 +10,7 @@ PACKAGE_BIN=${PACKAGE_BASE}/bin
 export PATH=$PACKAGE_BIN:/opt/homebrew/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/andrew/.oh-my-zsh"
-
-#ZSH_THEME="robbyrussell"
+export ZSH="~/.oh-my-zsh"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"

@@ -18,7 +18,7 @@ local packer = require('packer')
 vim.cmd [[
   augroup packer_user_config
     autocmd!
-    autocmd BufWritePost <buffer> source <afile> | PackerSync
+    autocmd BufWritePost ~/.config/nvim/lua/plugins/init.lua source <afile> | PackerSync
   augroup end
 ]]
 
@@ -65,7 +65,6 @@ return packer.startup(function ()
   use 'folke/which-key.nvim'
   use 'akinsho/toggleterm.nvim'
 
-  --use 'liuchengxu/vim-which-key'
   --use 'christoomey/vim-tmux-navigator'
 end)
 

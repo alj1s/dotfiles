@@ -18,6 +18,9 @@ map('n', '<C-l>', '<C-w>l', opts)
 map('v', 'J', ":m '>+1<CR>gv=gv", opts)
 map('v', 'K', ":m '<-2<CR>gv=gv", opts)
 
+map('v', '<', "<gv", opts)
+map('v', '>', ">gv", opts)
+
 map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
 map('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
 map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)

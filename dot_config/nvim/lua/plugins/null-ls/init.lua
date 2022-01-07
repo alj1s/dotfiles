@@ -4,7 +4,6 @@ local diagnostics = null_ls.builtins.diagnostics
 
 local sources = {
   formatting.prettierd,
-  formatting.eslint_d,
   diagnostics.eslint_d,
 }
 
