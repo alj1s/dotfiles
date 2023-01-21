@@ -37,16 +37,24 @@ return packer.startup(function ()
   use 'kyazdani42/nvim-tree.lua'
   use "numToStr/Comment.nvim" 
 
+  use 'williamboman/mason.nvim'
+  use 'williamboman/mason-lspconfig.nvim'
   use 'neovim/nvim-lspconfig'
-  use 'williamboman/nvim-lsp-installer'
   use 'jose-elias-alvarez/null-ls.nvim'
-  use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
-  use 'saadparwaiz1/cmp_luasnip'
-  use 'L3MON4D3/Luasnip'
-  use 'rafamadriz/friendly-snippets'
-  --use 'glepnir/lspsaga.nvim'
-  use 'onsails/lspkind-nvim'
+  use 'hrsh7th/cmp-nvim-lua'
+  use 'hrsh7th/cmp-nvim-lsp-signature-help'
+  use 'hrsh7th/cmp-vsnip'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
+  use 'hrsh7th/vim-vsnip'
+  use 'hrsh7th/nvim-cmp'
+  --use 'saadparwaiz1/cmp_luasnip'
+  --use 'L3MON4D3/Luasnip'
+  --use 'rafamadriz/friendly-snippets'
+  use 'glepnir/lspsaga.nvim'
+  --use 'onsails/lspkind.nvim'
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   --use 'nvim-treesitter/nvim-treesitter-textobjects'
   --use 'folke/trouble.nvim'
@@ -61,10 +69,16 @@ return packer.startup(function ()
   use 'nvim-lualine/lualine.nvim'
   use 'rcarriga/nvim-notify'
 
+  use 'windwp/nvim-autopairs'
+  use 'windwp/nvim-ts-autotag'
+
+  use 'norcalli/nvim-colorizer.lua'
+
   use 'goolord/alpha-nvim'
   use 'folke/which-key.nvim'
   use 'akinsho/toggleterm.nvim'
 
+  --use 'liuchengxu/vim-which-key'
   --use 'christoomey/vim-tmux-navigator'
 end)
 

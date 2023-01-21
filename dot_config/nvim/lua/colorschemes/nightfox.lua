@@ -1,4 +1,4 @@
-require('nightfox').load('nordfox')
+vim.cmd("colorscheme nightfox")
 
 vim.cmd [[
    highlight Normal guibg=none
